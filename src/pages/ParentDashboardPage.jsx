@@ -36,6 +36,7 @@ export default function ParentDashboardPage() {
     if (error) return <p>{error}</p>;
 
     const { name, chores = [], rewards = [], kids = [] } = parentData;
+    console.log(kids);
 
     const handleApprove = async (childId, choreId) => {
         await axios.post(`http://localhost:3000/api/parent/${parentId}/approveChore`, {
@@ -61,7 +62,68 @@ export default function ParentDashboardPage() {
                 <div>Total Chores: {chores.length}</div>
                 <div>Total Rewards: {rewards.length}</div>
             </section>
-            
+            <section className="kids-overview">
+                <h2>Your Kids</h2>
+                {kids.length === 0 ? (
+                    <p>No kids linked to your profile.</p>
+                ) : (
+                    <>
+                    <ul>
+                        {kids.map((kid) => (
+                            <li key={kid._id}>
+                                <h3>{kid.name}</h3>
+                                <p>Points: {kid.points}</p>
+                                <p>Completed Chores: {kid.completedChores?.length || 0}</p>
+
+                                {kid.completedChores?.length > 0 && (
+                                    <>
+                                        <h4>Completed Chores</h4>
+                                        <ul>
+                                            {kid.completedChores.map((chore, i) => (
+                                                <li key={i}>
+                                                    {chore.choreTitle} – {chore.pointsEarned} pts – {chore.status}
+                                                    {chore.status === 'rejected' && (
+                                                        <> (Reason: {chore.rejectionComment || 'N/A'})</>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+
+                                {kid.pendingRewards?.length > 0 && (
+                                    <>
+                                        <h4>Pending Rewards</h4>
+                                        <ul>
+                                            {kid.pendingRewards.map((reward, i) => (
+                                                <li key={i}>
+                                                    {reward.title} – {reward.pointsCost} pts – Requested on {new Date(reward.dateRequested).toLocaleDateString()}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+
+                                {kid.redeemedRewards?.length > 0 && (
+                                    <>
+                                        <h4>Redeemed Rewards</h4>
+                                        <ul>
+                                            {kid.redeemedRewards.map((reward, i) => (
+                                                <li key={i}>
+                                                    {reward.title} – {reward.pointsCost} pts – Redeemed on {new Date(reward.dateRedeemed).toLocaleDateString()}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                    <button onClick={() => navigate('/add-kid')}>➕ Add Kid</button>
+                    </>
+                     
+                )}
+            </section>
             <section className="pending-chores">
                 <h2>Pending Chores for Approval</h2>
                 {pendingChores.length === 0 ? (

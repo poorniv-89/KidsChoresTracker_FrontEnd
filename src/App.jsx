@@ -10,6 +10,7 @@ import ChoreManagementPage from './pages/ChoreManagementPage';
 import RewardsPage from './pages/RewardsPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import NotFoundPage from './pages/NotFoundPage';
+import AddKidPage from './pages/AddKid';
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
         <Route path="/chores" element={<ChoreManagementPage />} />
         <Route path="/rewards" element={<RewardsPage />} />
         <Route path="/how-it-works" element={<HowItWorksPage />} />
+        <Route path="/add-kid" element={<AddKidPage/>}/>
         <Route path="*" element={<NotFoundPage />} />
+        
       </Routes>
       </>
   );
