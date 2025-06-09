@@ -13,7 +13,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
-    <AuthProvider>
+    <>
       <Nav />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -25,7 +25,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorksPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </AuthProvider>
+      </>
   );
 }
 

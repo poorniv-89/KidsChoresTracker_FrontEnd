@@ -4,28 +4,30 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isParentLoggedIn, setIsParentLoggedIn] = useState(false);
+  const [parentId, setParentId] = useState(null);
 
   useEffect(() => {
-    const parentId = localStorage.getItem('parentId');
-    if (parentId) {
-        setIsParentLoggedIn(true);
-      } else {
-        setIsParentLoggedIn(false);
-      }
+    const storedId = localStorage.getItem('parentId');
+    if (storedId) {
+      setParentId(storedId);
+      setIsParentLoggedIn(true);
+    }
   }, []);
 
   const login = (id) => {
     localStorage.setItem('parentId', id);
+    setParentId(id);
     setIsParentLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.removeItem('parentId');
+    setParentId(null);
     setIsParentLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isParentLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isParentLoggedIn, parentId, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

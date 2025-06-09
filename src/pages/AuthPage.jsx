@@ -26,7 +26,8 @@ export default function AuthPage() {
     try {
       const res = await axios.post(url, formData);
       setMessage(isSignUp ? 'Signup successful!' : 'Signin successful!');
-      login(parent.id);
+      // console.log('response.data:', res.data);
+      login(res.data.parent.id);
       navigate('/parent-dashboard');
 
     } catch (err) {
