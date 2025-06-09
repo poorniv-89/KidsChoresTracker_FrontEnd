@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function AuthPage() {
+  const { login } = useAuth();
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
@@ -22,16 +24,17 @@ export default function AuthPage() {
 
     const url = isSignUp ? `${baseURL}` : `${baseURL}/signin`;
     try {
-        const res = await axios.post(url, formData);
-        setMessage(isSignUp ? 'Signup successful!' : 'Signin successful!');
-        navigate('/parent-dashboard');
-       
-      } catch (err) {
-        const errorMessage =
-          err.response?.data?.message || 'Something went wrong. Please try again.';
-        setMessage(errorMessage);
-      }
-    };
+      const res = await axios.post(url, formData);
+      setMessage(isSignUp ? 'Signup successful!' : 'Signin successful!');
+      login(parent.id);
+      navigate('/parent-dashboard');
+
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || 'Something went wrong. Please try again.';
+      setMessage(errorMessage);
+    }
+  };
 
   return (
     <div>

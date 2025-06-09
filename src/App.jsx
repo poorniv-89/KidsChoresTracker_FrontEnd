@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom';
-import './App.css'
+import { AuthProvider } from './context/AuthContext';
+
+import Nav from './components/Nav';
 import HomePage from './pages/HomePage';
 import AuthPage from './pages/AuthPage';
 import ParentDashboardPage from './pages/ParentDashboardPage';
@@ -9,14 +10,12 @@ import ChoreManagementPage from './pages/ChoreManagementPage';
 import RewardsPage from './pages/RewardsPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import NotFoundPage from './pages/NotFoundPage';
-import Nav from './components/Nav';
 
 function App() {
-
   return (
-    <>
-    <Nav/>
-    <Routes>
+    <AuthProvider>
+      <Nav />
+      <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/parent-dashboard" element={<ParentDashboardPage />} />
@@ -26,8 +25,8 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorksPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
-  )
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
