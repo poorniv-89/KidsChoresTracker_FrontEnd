@@ -1,15 +1,24 @@
-export default function HomePage(){
-    return (
-        <div>
-        <header>
+import { useNavigate } from 'react-router-dom';
+
+export default function HomePage() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/auth'); 
+  };
+
+  return (
+    <div>
+      <header>
         <h1>Make Chores a Blast!</h1>
         <p>
           ChoreBlasterz helps families track chores, earn rewards and build responsibility —
           the fun way!
         </p>
-        <button>Get Started</button>
+        <button onClick={handleGetStarted}>Get Started</button>
         <div></div>
       </header>
+
       <section id="how-it-works">
         <h2>How It Works</h2>
         <ol>
@@ -18,6 +27,7 @@ export default function HomePage(){
           <li>3. Everyone earns rewards</li>
         </ol>
       </section>
+
       <section>
         <h2>Features</h2>
         <ul>
@@ -27,9 +37,10 @@ export default function HomePage(){
           <li>Daily/Weekly Chore Planner</li>
         </ul>
       </section>
+
       <footer>
-        <button>Get Started</button>
+        <button onClick={handleGetStarted}>Get Started</button>
       </footer>
     </div>
-    )
+  );
 }
