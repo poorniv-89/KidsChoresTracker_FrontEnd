@@ -11,11 +11,11 @@ export default function ChildHistorySection({ completedChores, pendingRewards, r
                     {completedChores.map((chore, i) => (
                         <li key={i}>
                             {chore.choreTitle} – {chore.pointsEarned} pts –{" "}
-                            {chore.approved
-                                ? "Approved"
-                                : chore.rejected
-                                    ? `Rejected (${chore.rejectionComment || "No reason"})`
-                                    : "Pending Approval"}
+                            {chore.status === 'approved'
+                                ? 'Approved'
+                                : chore.status === 'rejected'
+                                    ? `Rejected (${chore.rejectionComment || 'No reason'})`
+                                    : 'Pending Approval'}
                         </li>
                     ))}
                 </ul>

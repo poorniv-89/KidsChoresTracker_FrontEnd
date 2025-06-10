@@ -11,6 +11,7 @@ import RewardsPage from './pages/RewardsPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AddKidPage from './pages/AddKid';
+import MykidsPage from './pages/MyKidsPage';
 import ChildHistoryPage from './pages/ChildHistoryPage';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/rewards" element={<RewardsPage />} />
         <Route path="/how-it-works" element={<HowItWorksPage />} />
         <Route path="/add-kid" element={<AddKidPage/>}/>
+        <Route path="/my-kids" element={<MykidsPage />} />
         <Route path="/child/:childId/history" element={<ChildHistoryPage />} />
         <Route path="*" element={<NotFoundPage />} />
         

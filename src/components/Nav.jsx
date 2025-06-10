@@ -25,8 +25,9 @@ export default function Nav() {
           {isParentLoggedIn ? (
             <>
               <li><Link to="/parent-dashboard">Dashboard</Link></li>
-              <li><Link to="/chores">Chores</Link></li>
-              <li><Link to="/rewards">Rewards</Link></li>
+              <li><Link to="/chores">Manage Chores</Link></li>
+              <li><Link to="/rewards">Manage Rewards</Link></li>
+              <li><Link to="/my-kids">My Kids</Link></li>
               <li><button onClick={handleLogout}>Logout</button></li>
             </>
           ) : (
