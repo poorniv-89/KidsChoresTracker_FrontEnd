@@ -12,24 +12,37 @@ export default function ChildDashboardPage() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [quote, setQuote] = useState(null);
 
     useEffect(() => {
         fetchChildData();
-           }, [childId]);
-              const fetchChildData = async () => {
-            try {
-                const availableRes = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
-                setPoints(availableRes.data.childPoints);
-                setChores(availableRes.data.chores);
-                setRewards(availableRes.data.rewards);
-                const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
-                setChildName(profileRes.data.details.name);
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to load child dashboard.');
-                setLoading(false);
-            }
-        };
+        fetchQuote();
+    }, [childId]);
+
+    const fetchChildData = async () => {
+        try {
+            const availableRes = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
+            setPoints(availableRes.data.childPoints);
+            setChores(availableRes.data.chores);
+            setRewards(availableRes.data.rewards);
+            const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
+            setChildName(profileRes.data.details.name);
+            setLoading(false);
+        } catch (err) {
+            setError('Failed to load child dashboard.');
+            setLoading(false);
+        }
+    };
+
+    const fetchQuote = async () => {
+        try {
+            const res = await fetch('https://api.realinspire.live/v1/quotes/random?limit=1&maxLength=120');
+            const data = await res.json();
+            setQuote({ text: data[0].content, author: data[0].author });
+        } catch (err) {
+            console.error('Failed to fetch quote');
+        }
+    };
 
     const handleCompleteChore = async (choreId) => {
         try {
@@ -63,6 +76,11 @@ export default function ChildDashboardPage() {
         <div>
             <ChildNavbar childId={childId} />
             <h1>Welcome, {childName}!</h1>
+            {quote && (
+                <blockquote style={{ fontStyle: 'italic', margin: '1em 0' }}>
+                    “{quote.text}” — {quote.author}
+                </blockquote>
+            )}
             <h1 id="dashboard">Child Dashboard</h1>
             <h2>Points: {points}</h2>
 

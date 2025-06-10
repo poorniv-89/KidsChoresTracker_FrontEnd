@@ -30,5 +30,5 @@ export default function MyKidsPage() {
     if (loading) return <p>Loading kids...</p>;
     if (error) return <p>{error}</p>;
 
-    return <MyKids kids={kids} />;
+    return <MyKids kids={kids} showAddButton={true} />;;
 }
