@@ -11,6 +11,7 @@ import RewardsPage from './pages/RewardsPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AddKidPage from './pages/AddKid';
+import ChildHistoryPage from './pages/ChildHistoryPage';
 
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/parent-dashboard" element={<ParentDashboardPage />} />
-        <Route path="/child-dashboard" element={<ChildDashboardPage />} />
+        <Route path="/child/:childId" element={<ChildDashboardPage />} />
         <Route path="/chores" element={<ChoreManagementPage />} />
         <Route path="/rewards" element={<RewardsPage />} />
         <Route path="/how-it-works" element={<HowItWorksPage />} />
         <Route path="/add-kid" element={<AddKidPage/>}/>
+        <Route path="/child/:childId/history" element={<ChildHistoryPage />} />
         <Route path="*" element={<NotFoundPage />} />
         
       </Routes>

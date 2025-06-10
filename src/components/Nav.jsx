@@ -1,10 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 import ChoreBlasterzLogo from '../assets/ChoreBlasterzLogo.svg';
 
 export default function Nav() {
   const { isParentLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isChildRoute = location.pathname.startsWith('/child/');
+  if (isChildRoute) return null;
 
   const handleLogout = () => {
     logout();
