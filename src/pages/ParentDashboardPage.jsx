@@ -68,60 +68,78 @@ export default function ParentDashboardPage() {
                     <p>No kids linked to your profile.</p>
                 ) : (
                     <>
-                    <ul>
-                        {kids.map((kid) => (
-                            <li key={kid._id}>
-                                <h3>{kid.name}</h3>
-                                <p>Points: {kid.points}</p>
-                                <p>Completed Chores: {kid.completedChores?.length || 0}</p>
+                        <ul>
+                            {kids.map((kid) => (
+                                <li key={kid._id}>
+                                    <h3>{kid.name}</h3>
+                                    <p>
+                                        Dashboard Link:{" "}
+                                        <a
+                                            href={`http://localhost:5173/child/${kid._id}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {`http://localhost:5173/child/${kid._id}`}
+                                        </a>
+                                        <button
+                                            onClick={() =>
+                                                navigator.clipboard.writeText(`http://localhost:5173/child/${kid._id}`)
+                                            }
+                                            style={{ marginLeft: '10px' }}
+                                        >
+                                            Copy Link
+                                        </button>
+                                    </p>
+                                    <p>Points: {kid.points}</p>
+                                    <p>Completed Chores: {kid.completedChores?.length || 0}</p>
 
-                                {kid.completedChores?.length > 0 && (
-                                    <>
-                                        <h4>Completed Chores</h4>
-                                        <ul>
-                                            {kid.completedChores.map((chore, i) => (
-                                                <li key={i}>
-                                                    {chore.choreTitle} – {chore.pointsEarned} pts – {chore.status}
-                                                    {chore.status === 'rejected' && (
-                                                        <> (Reason: {chore.rejectionComment || 'N/A'})</>
-                                                    )}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </>
-                                )}
+                                    {kid.completedChores?.length > 0 && (
+                                        <>
+                                            <h4>Completed Chores</h4>
+                                            <ul>
+                                                {kid.completedChores.map((chore, i) => (
+                                                    <li key={i}>
+                                                        {chore.choreTitle} – {chore.pointsEarned} pts – {chore.status}
+                                                        {chore.status === 'rejected' && (
+                                                            <> (Reason: {chore.rejectionComment || 'N/A'})</>
+                                                        )}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    )}
 
-                                {kid.pendingRewards?.length > 0 && (
-                                    <>
-                                        <h4>Pending Rewards</h4>
-                                        <ul>
-                                            {kid.pendingRewards.map((reward, i) => (
-                                                <li key={i}>
-                                                    {reward.title} – {reward.pointsCost} pts – Requested on {new Date(reward.dateRequested).toLocaleDateString()}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </>
-                                )}
+                                    {kid.pendingRewards?.length > 0 && (
+                                        <>
+                                            <h4>Pending Rewards</h4>
+                                            <ul>
+                                                {kid.pendingRewards.map((reward, i) => (
+                                                    <li key={i}>
+                                                        {reward.title} – {reward.pointsCost} pts – Requested on {new Date(reward.dateRequested).toLocaleDateString()}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    )}
 
-                                {kid.redeemedRewards?.length > 0 && (
-                                    <>
-                                        <h4>Redeemed Rewards</h4>
-                                        <ul>
-                                            {kid.redeemedRewards.map((reward, i) => (
-                                                <li key={i}>
-                                                    {reward.title} – {reward.pointsCost} pts – Redeemed on {new Date(reward.dateRedeemed).toLocaleDateString()}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                    <button onClick={() => navigate('/add-kid')}>➕ Add Kid</button>
+                                    {kid.redeemedRewards?.length > 0 && (
+                                        <>
+                                            <h4>Redeemed Rewards</h4>
+                                            <ul>
+                                                {kid.redeemedRewards.map((reward, i) => (
+                                                    <li key={i}>
+                                                        {reward.title} – {reward.pointsCost} pts – Redeemed on {new Date(reward.dateRedeemed).toLocaleDateString()}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                        <button onClick={() => navigate('/add-kid')}>➕ Add Kid</button>
                     </>
-                     
+
                 )}
             </section>
             <section className="pending-chores">

@@ -11,10 +11,12 @@ export default function AddKidPage() {
     const handleAddKid = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/api/child', {
+            const res = await axios.post('http://localhost:3000/api/child', {
                 name,
                 parent: parentId
             });
+            const { childLink } = res.data;
+            alert(`Share this link with your child: ${childLink}`);
             navigate('/parent-dashboard');
         } catch (err) {
             console.error('Failed to add kid:', err);
