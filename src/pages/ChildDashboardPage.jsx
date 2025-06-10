@@ -8,6 +8,7 @@ export default function ChildDashboardPage() {
     const [points, setPoints] = useState(0);
     const [chores, setChores] = useState([]);
     const [rewards, setRewards] = useState([]);
+    const [childName, setChildName] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
@@ -21,6 +22,8 @@ export default function ChildDashboardPage() {
                 setPoints(availableRes.data.childPoints);
                 setChores(availableRes.data.chores);
                 setRewards(availableRes.data.rewards);
+                const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
+                setChildName(profileRes.data.details.name);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to load child dashboard.');
@@ -59,6 +62,7 @@ export default function ChildDashboardPage() {
     return (
         <div>
             <ChildNavbar childId={childId} />
+            <h1>Welcome, {childName}!</h1>
             <h1 id="dashboard">Child Dashboard</h1>
             <h2>Points: {points}</h2>
 

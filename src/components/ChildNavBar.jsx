@@ -12,7 +12,7 @@ export default function ChildNavbar({ childId }) {
       </div>
       <ul>
         <li>
-          <a href="#dashboard">Dashboard</a>
+        <Link to={`/child/${childId}`}>Dashboard</Link>
         </li>
         <li>
           <Link to={`/child/${childId}/history`}>History</Link>
