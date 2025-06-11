@@ -38,7 +38,8 @@ export default function AuthPage() {
   };
 
   return (
-    <div>
+    <div className="authWrapper">
+    <div className="authContainer">
       <h1>{isSignUp ? 'Parent Sign Up' : 'Parent Sign In'}</h1>
 
       <form onSubmit={handleSubmit}>
@@ -67,6 +68,7 @@ export default function AuthPage() {
       <button onClick={() => setIsSignUp(!isSignUp)}>
         {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
       </button>
+    </div>
     </div>
   );
 }

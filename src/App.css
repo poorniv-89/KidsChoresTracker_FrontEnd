@@ -1,5 +1,6 @@
 /* === Global === */
-body, .landingContainer {
+body,
+.landingContainer {
   font-family: 'Fredoka', sans-serif;
   margin: 0;
   padding: 0;
@@ -241,4 +242,87 @@ footer button:hover {
   .features ul {
     padding: 0 1rem;
   }
+}
+
+/* === Auth Page === */
+.authWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 10rem;
+  justify-content: center;
+  background-color: #f7fcfc;
+}
+
+.authContainer {
+  max-width: 400px;
+  width: 100%;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  font-family: 'Fredoka', sans-serif;
+}
+
+.authContainer h1 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.authContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.authContainer form>div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.authContainer label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  width: 90px;
+  text-align: right;
+}
+
+.authContainer input {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  max-width: 200px;
+}
+
+.authContainer button {
+  margin: 1rem auto 0;
+  padding: 0.5rem 1.2rem;
+  background-color: #7f5af0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: block;
+}
+
+.authContainer button:hover {
+  background-color: #6845d9;
+}
+
+.authContainer p {
+  text-align: center;
+  margin-top: 1rem;
+  color: #d63333;
+  font-size: 0.9rem;
 }
