@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 import ChoreBlasterzLogo from '../assets/ChoreBlasterzLogo.svg';
+import '../App.css';
 
 export default function Nav() {
   const { isParentLoggedIn, logout } = useAuth();
@@ -18,7 +19,7 @@ export default function Nav() {
   return (
     <nav className="homeNav">
       <div className="navContainer">
-        <Link to="/">
+        <Link to="/" className="logoLink">
           <img src={ChoreBlasterzLogo} alt="ChoreBlasterz Logo" className="logo" />
         </Link>
         <ul className="navList">
@@ -28,7 +29,7 @@ export default function Nav() {
               <li><Link to="/chores">Manage Chores</Link></li>
               <li><Link to="/rewards">Manage Rewards</Link></li>
               <li><Link to="/my-kids">My Kids</Link></li>
-              <li><button onClick={handleLogout}>Logout</button></li>
+              <li><button className="logoutBtn" onClick={handleLogout}>Logout</button></li>
             </>
           ) : (
             <>

@@ -1,13 +1,244 @@
-  .navList {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* === Global === */
+body, .landingContainer {
+  font-family: 'Fredoka', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7fcfc;
+  color: #333;
+}
+
+button {
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* === NavBar === */
+.homeNav {
+  background-color: #3aaed8;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navList {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navList li {
+  display: flex;
+  align-items: center;
+}
+
+.navList li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navList li a:hover {
+  color: #cfefff;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background: white;
+  color: #00b4d8;
+}
+
+/* === Hero Section === */
+.heroSection {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 2rem;
+  background-color: #e0f7fa;
+  border-bottom: 4px double #ffb347;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  gap: 2rem;
+}
+
+.heroText {
+  flex: 1;
+  min-width: 280px;
+}
+
+.heroText h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ff8a00;
+}
+
+.heroText p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+.heroText button {
+  padding: 0.8rem 1.6rem;
+  background-color: #7f5af0;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.heroText button:hover {
+  background-color: #6845d9;
+}
+
+.heroImage {
+  flex: 1;
+  min-width: 260px;
+  text-align: center;
+}
+
+.heroImage img {
+  max-width: 75%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === How It Works Section === */
+.howItWorks {
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.howItWorks h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #ff8a00;
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 900px;
+}
+
+.step {
+  background-color: #e4f3ff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  width: 220px;
+  font-weight: bold;
+  color: #007acc;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.step:hover {
+  transform: scale(1.05);
+}
+
+/* === Features Section === */
+.features {
+  padding: 3rem 2rem;
+  background-color: #f7fcfc;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.features h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #ff8a00;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.features li {
+  margin: 0.5rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #007f8c;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #e0f0ff;
+}
+
+footer button {
+  padding: 0.8rem 1.6rem;
+  background-color: #7f5af0;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer button:hover {
+  background-color: #6845d9;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+    text-align: center;
   }
-  
-  .navList li a {
-    text-decoration: none;
+
+  .heroText h1 {
+    font-size: 2.2rem;
   }
-  
+
+  .heroImage img {
+    max-width: 60%;
+  }
+
+  .steps {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features ul {
+    padding: 0 1rem;
+  }
+}
