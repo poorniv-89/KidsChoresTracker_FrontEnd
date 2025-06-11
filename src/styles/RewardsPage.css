@@ -1,0 +1,110 @@
+.rewards-management {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ddfafa;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  font-family: 'Fredoka', sans-serif;
+}
+
+.rewards-management h1 {
+  text-align: center;
+  color: #1e88e5;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+/* === Form Section === */
+.reward-form {
+  background: #fff8f0;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(255, 168, 0, 0.15);
+  margin: 0 auto 2rem;
+  max-width: 400px;
+}
+
+.reward-form h2 {
+  text-align: center;
+  color: #ff8a65;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.reward-form input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  border: 1px solid #ffd180;
+  background-color: #fffef8;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.reward-form input:focus {
+  border-color: #ffb74d;
+  outline: none;
+  background-color: #fffde7;
+}
+
+.reward-form button {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: #ff7043;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.reward-form button:hover {
+  background-color: #f4511e;
+}
+
+/* === List Section === */
+.reward-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reward-list li {
+  background-color: #ffffff;
+  border-left: 5px solid #64b5f6;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+}
+
+.reward-list span {
+  flex: 1;
+  font-weight: 500;
+}
+
+.reward-list button {
+  background-color: #e53935;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+}
+
+.reward-list button:hover {
+  background-color: #c62828;
+}

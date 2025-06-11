@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import '../styles/RewardsPage.css'; 
 
 export default function RewardsPage() {
   const { parentId } = useAuth();
@@ -54,16 +55,22 @@ export default function RewardsPage() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="rewards-management">
       <h1>Rewards</h1>
 
-      <form onSubmit={handleAddReward}>
-        <label>Title:</label>
-        <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} required />
+      <form onSubmit={handleAddReward} className="reward-form">
+        <h2>Add New Reward</h2>
+        <input
+          type="text"
+          placeholder="Reward Title"
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+          required
+        />
 
-        <label>Points Cost:</label>
         <input
           type="number"
+          placeholder="Points Cost"
           value={newPoints}
           onChange={(e) => setNewPoints(e.target.value)}
           required
@@ -72,13 +79,13 @@ export default function RewardsPage() {
         <button type="submit">Add Reward</button>
       </form>
 
-      <ul>
+      <ul className="reward-list">
         {rewards.length === 0 ? (
           <p>No rewards added yet.</p>
         ) : (
           rewards.map((reward) => (
             <li key={reward._id}>
-              {reward.title} – {reward.pointsCost} pts
+              <span>{reward.title} – {reward.pointsCost} pts</span>
               <button onClick={() => handleDelete(reward._id)}>Delete</button>
             </li>
           ))

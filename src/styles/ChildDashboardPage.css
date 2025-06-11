@@ -1,0 +1,143 @@
+.child-dashboard {
+    background: url('../assets/KidsDashBG.png') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .quote-standalone {
+    background-color: rgba(255, 249, 196, 0.9);
+    border: 3px dashed #ffca28;
+    border-radius: 40px;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4e342e;
+    max-width: 700px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .dashboard-container {
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 50px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .welcome {
+    font-size: 2.6rem;
+    font-weight: bold;
+    color: #ef5350;
+    margin-bottom: 1.5rem;
+  }
+  
+  .points-box {
+    background-color: #90caf9;
+    font-size: 1.6rem;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    color: #0d47a1;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+
+  .section {
+    margin-top: 2rem;
+  }
+  
+
+  .section.chores h2 {
+    background-color: #f06292;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    display: inline-block;
+  }
+  
+  .section.chores li {
+    background-color: #ffe0b2;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .section.chores button {
+    background-color: #ffb74d;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.6rem 1.2rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .section.chores button:hover {
+    background-color: #ffa000;
+  }
+  
+  .section.rewards h2 {
+    background-color: #4db6ac;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    display: inline-block;
+  }
+  
+  .section.rewards li {
+    background-color: #b2ebf2;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .section.rewards button {
+    background-color: #9575cd;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.6rem 1.2rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .section.rewards button:hover {
+    background-color: #7e57c2;
+  }
+  
+  .section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .status-msg {
+    margin-top: 1rem;
+    color: #388e3c;
+    font-weight: bold;
+  }
