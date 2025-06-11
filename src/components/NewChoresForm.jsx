@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import '../styles/NewChoresForm.css'; // make sure to import your CSS
 
 export default function ChoreForm({ choreToEdit, onSuccess }) {
   const { parentId } = useAuth();
@@ -34,30 +35,44 @@ export default function ChoreForm({ choreToEdit, onSuccess }) {
       }
       setTitle('');
       setPoints('');
-      onSuccess(); 
+      onSuccess();
     } catch (err) {
       console.error('Error submitting chore:', err);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="chore-form">
       <h2>{isEditing ? 'Edit Chore' : 'Add New Chore'}</h2>
-      <input
-        type="text"
-        value={title}
-        placeholder="Chore Title"
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <input
-        type="number"
-        value={points}
-        placeholder="Points"
-        onChange={(e) => setPoints(e.target.value)}
-        required
-      />
-      <button type="submit">{isEditing ? 'Update Chore' : 'Add Chore'}</button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            value={title}
+            placeholder="Chore Title"
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="points">Points</label>
+          <input
+            id="points"
+            type="number"
+            value={points}
+            placeholder="Points"
+            onChange={(e) => setPoints(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit">
+          {isEditing ? 'Update Chore' : 'Add Chore'}
+        </button>
+      </form>
+    </div>
   );
 }

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import ChoreForm from '../components/NewChoresForm';
+import '../styles/ChoreManagementPage.css';
+
 
 export default function ChoreManagementPage() {
   const { parentId } = useAuth();
@@ -28,7 +30,7 @@ export default function ChoreManagementPage() {
   const handleDelete = async (choreId) => {
     try {
       await axios.delete(`http://localhost:3000/api/parent/${parentId}/chores/${choreId}`);
-      fetchChores(); 
+      fetchChores();
     } catch (err) {
       setError('Failed to delete chore');
     }
@@ -43,15 +45,15 @@ export default function ChoreManagementPage() {
 
       <ChoreForm choreToEdit={choreToEdit} onSuccess={() => {
         fetchChores();
-        setChoreToEdit(null); 
+        setChoreToEdit(null);
       }} />
-      <ul>
+      <ul className="chore-list">
         {chores.length === 0 ? (
           <p>No chores found.</p>
         ) : (
           chores.map((chore, index) => (
             <li key={index}>
-              {chore.title} – {chore.points} pts
+              <span>{chore.title} – {chore.points} pts</span>
               <button onClick={() => setChoreToEdit({ ...chore, index })}>Edit</button>
               <button onClick={() => handleDelete(chore._id)}>Delete</button>
             </li>

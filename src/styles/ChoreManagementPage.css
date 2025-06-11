@@ -1,0 +1,70 @@
+.chore-management {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ddfafa;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.221);
+    font-family: 'Fredoka', sans-serif;
+  }
+  
+  .chore-management h1 {
+    text-align: center;
+    color: #1e88e5;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+  
+  .chore-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .chore-list li {
+    background-color: #ffffff;
+    border-left: 5px solid #64b5f6;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+  }
+  
+  .chore-list span {
+    flex: 1;
+    font-weight: 500;
+  }
+  
+  .chore-list button {
+    margin-left: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .chore-list button:first-of-type {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .chore-list button:first-of-type:hover {
+    background-color: #388e3c;
+  }
+  
+  .chore-list button:last-of-type {
+    background-color: #e53935;
+    color: white;
+  }
+  
+  .chore-list button:last-of-type:hover {
+    background-color: #c62828;
+  }
+  

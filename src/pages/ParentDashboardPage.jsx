@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import MyKids from './MyKidsPage';
+import '../styles/ParentDashboardPage.css'
 
 export default function ParentDashboardPage() {
     const { isParentLoggedIn, parentId } = useAuth();
@@ -99,28 +99,29 @@ export default function ParentDashboardPage() {
                     <ul>
                         {pendingChores.map((chore) => (
                             <li key={chore.choreId}>
-                                <strong>{chore.kidName}</strong>: {chore.choreTitle} – {chore.pointsEarned} pts
-                                <button onClick={() => handleApprove(chore.childId, chore.choreId)}>Approve</button>
-                                <button onClick={() => setRejectingChore(chore)}>Reject</button>
+                                <div className="chore-details">
+                                    <strong>{chore.kidName}</strong>: {chore.choreTitle} – {chore.pointsEarned} pts
+                                </div>
+                                <div className="button-group">
+                                    <button onClick={() => handleApprove(chore.childId, chore.choreId)}>Approve</button>
+                                    <button className="reject" onClick={() => setRejectingChore(chore)}>Reject</button>
+                                </div>
 
                                 {rejectingChore?.choreId === chore.choreId && (
-                                    <div>
+                                    <div className="action-row">
                                         <textarea
                                             placeholder="Enter rejection reason"
                                             value={rejectionComment}
                                             onChange={(e) => setRejectionComment(e.target.value)}
-                                            rows={3}
-                                            cols={40}
+                                            rows={2}
                                         />
-                                        <button onClick={() => handleReject(chore.childId, chore.choreId, rejectionComment)}>
-                                            Reject
-                                        </button>
-                                        <button onClick={() => {
-                                            setRejectingChore(null);
-                                            setRejectionComment('');
-                                        }}>
-                                            Cancel
-                                        </button>
+                                        <div className="button-group">
+                                            <button onClick={() => handleReject(chore.childId, chore.choreId, rejectionComment)}>Reject</button>
+                                            <button className="reject" onClick={() => {
+                                                setRejectingChore(null);
+                                                setRejectionComment('');
+                                            }}>Cancel</button>
+                                        </div>
                                     </div>
                                 )}
                             </li>

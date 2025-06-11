@@ -1,0 +1,52 @@
+.chore-form {
+    background: #fff8f0;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(255, 168, 0, 0.15);
+    margin: 0 auto 2rem;
+    max-width: 400px;
+    font-family: 'Fredoka', sans-serif;
+  }
+  
+  .chore-form h2 {
+    text-align: center;
+    color: #ff8a65;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+  
+  .chore-form input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    border: 1px solid #ffd180;
+    background-color: #fffef8;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .chore-form input:focus {
+    border-color: #ffb74d;
+    outline: none;
+    background-color: #fffde7;
+  }
+  
+  .chore-form button {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: #ff7043;
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .chore-form button:hover {
+    background-color: #f4511e;
+  }
+  
