@@ -1,0 +1,90 @@
+.my-kids-container {
+    padding: 2rem;
+    background-color: #f0faff;
+    min-height: 100vh;
+    font-family: 'Fredoka', sans-serif;
+    color: #333;
+  }
+  
+  .my-kids-container h2 {
+    text-align: center;
+    font-size: 3rem;
+    color: #1976d2;
+    margin-bottom: 4rem;
+  }
+  
+  .my-kids-container p {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .kids-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .kid-card {
+    background-color: #fff3cd;
+    border-radius: 30px;
+    padding: 1.5rem 2rem;
+    width: 260px;
+    box-shadow: 10px 4px 12px rgba(0, 0, 0, 0.24);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .kid-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .kid-card h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #ff7043;
+  }
+  
+  .kid-card p {
+    font-size: 1rem;
+    margin: 0.4rem 0;
+    color: #6d4c41;
+  }
+  
+  .copy-button {
+    background-color: #4fc3f7;
+    color: white;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    box-shadow: 10px 4px 12px rgba(0, 0, 0, 0.24);
+    transition: background-color 0.3s ease;
+  }
+  
+  .copy-button:hover {
+    background-color: #0288d1;
+  }
+  
+  .add-kid-button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.8rem 1.6rem;
+    background-color: #4db6ac;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 10px 4px 12px rgba(0, 0, 0, 0.24);
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-kid-button:hover {
+    background-color: #00897b;
+  }

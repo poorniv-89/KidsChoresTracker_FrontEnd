@@ -4,7 +4,7 @@ body,
   font-family: 'Fredoka', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7fcfc;
+  background-color: #ffffff;
   color: #333;
 }
 
@@ -219,30 +219,6 @@ footer button:hover {
   background-color: #6845d9;
 }
 
-/* === Responsive Design === */
-@media (max-width: 768px) {
-  .heroSection {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .heroText h1 {
-    font-size: 2.2rem;
-  }
-
-  .heroImage img {
-    max-width: 60%;
-  }
-
-  .steps {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .features ul {
-    padding: 0 1rem;
-  }
-}
 
 /* === Auth Page === */
 .authWrapper {
@@ -250,17 +226,16 @@ footer button:hover {
   align-items: center;
   margin-top: 10rem;
   justify-content: center;
-  background-color: #f7fcfc;
 }
 
 .authContainer {
   max-width: 400px;
   width: 100%;
   padding: 1.5rem;
-  background-color: #ffffff;
+  background-color: #ddf4f6;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.749);
   font-family: 'Fredoka', sans-serif;
 }
 
