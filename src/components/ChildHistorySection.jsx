@@ -1,53 +1,77 @@
 import React from 'react';
 
-export default function ChildHistorySection({ completedChores, pendingRewards, redeemedRewards }) {
-    return (
-        <div>
-            <h2>Completed Chores</h2>
-            {completedChores.length === 0 ? (
-                <p>No chores completed yet.</p>
-            ) : (
-                <ul>
-                    {completedChores.map((chore, i) => (
-                        <li key={i}>
-                            {chore.choreTitle} – {chore.pointsEarned} pts –{" "}
-                            {chore.status === 'approved'
-                                ? 'Approved'
-                                : chore.status === 'rejected'
-                                    ? `Rejected (${chore.rejectionComment || 'No reason'})`
-                                    : 'Pending Approval'}
-                        </li>
-                    ))}
-                </ul>
-            )}
+export default function ChildHistorySection({ completedChores = [], pendingRewards = [], redeemedRewards = [] }) {
+  return (
+    <div className="history-dashboard-container">
 
-            <h2>Pending Reward Requests</h2>
-            {pendingRewards.length === 0 ? (
-                <p>No pending reward requests.</p>
-            ) : (
-                <ul>
-                    {pendingRewards.map((reward, i) => (
-                        <li key={i}>
-                            {reward.title} – {reward.pointsCost} pts – Requested on{" "}
-                            {new Date(reward.dateRequested).toLocaleDateString()}
-                        </li>
-                    ))}
-                </ul>
-            )}
+      <div className="history-section">
+        <h2 className="history-heading chores">✅ Completed Chores</h2>
+        {completedChores.length === 0 ? (
+          <p className="history-empty">No chores completed yet.</p>
+        ) : (
+          <ul className="history-list">
+            {completedChores.map((chore, i) => (
+              <li className="history-card" key={i}>
+                <div className="history-title">{chore.choreTitle}</div>
+                <div className="history-points">{chore.pointsEarned} pts</div>
+                <div className={`history-status ${chore.status}`}>
+                  {chore.status === 'approved'
+                    ? '✅ Approved'
+                    : chore.status === 'rejected'
+                      ? (
+                        <>
+                          ❌ Rejected
+                          <br />
+                          <span className="rejection-comment">
+                            Reason: {chore.rejectionComment || 'No reason provided'}
+                          </span>
+                        </>
+                      )
+                      : '⏳ Pending Approval'}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-            <h2>Redeemed Rewards</h2>
-            {redeemedRewards.length === 0 ? (
-                <p>No rewards redeemed yet.</p>
-            ) : (
-                <ul>
-                    {redeemedRewards.map((reward, i) => (
-                        <li key={i}>
-                            {reward.title} – {reward.pointsCost} pts – Redeemed on{" "}
-                            {new Date(reward.dateRedeemed).toLocaleDateString()}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
+      <div className="history-section">
+        <h2 className="history-heading pending">🎁 Pending Reward Requests</h2>
+        {pendingRewards.length === 0 ? (
+          <p className="history-empty">No pending reward requests.</p>
+        ) : (
+          <ul className="history-list">
+            {pendingRewards.map((reward, i) => (
+              <li className="history-card" key={i}>
+                <div className="history-title">{reward.title}</div>
+                <div className="history-points">{reward.pointsCost} pts</div>
+                <div className="history-status">
+                  Requested on {new Date(reward.dateRequested).toLocaleDateString()}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="history-section">
+        <h2 className="history-heading redeemed">🏆 Redeemed Rewards</h2>
+        {redeemedRewards.length === 0 ? (
+          <p className="history-empty">No rewards redeemed yet.</p>
+        ) : (
+          <ul className="history-list">
+            {redeemedRewards.map((reward, i) => (
+              <li className="history-card" key={i}>
+                <div className="history-title">{reward.title}</div>
+                <div className="history-points">{reward.pointsCost} pts</div>
+                <div className="history-status">
+                  Redeemed on {new Date(reward.dateRedeemed).toLocaleDateString()}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 }

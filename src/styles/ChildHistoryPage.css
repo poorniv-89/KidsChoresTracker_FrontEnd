@@ -1,0 +1,102 @@
+.child-history-page {
+    background: url('../assets/KidsDashBG.png') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    font-family: 'Fredoka', sans-serif;
+  }
+.history-dashboard-container {
+    background-color: rgba(255, 255, 255, 0.602);
+    border-radius: 40px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.68);
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
+  }
+  
+  .history-section {
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  
+  .history-heading {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 16px;
+    display: inline-block;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .history-heading.chores {
+    background-color: #f06292;
+  }
+  .history-heading.pending {
+    background-color: #4db6ac;
+  }
+  .history-heading.redeemed {
+    background-color: #64b5f6;
+  }
+  
+  .history-empty {
+    color: #888;
+    font-style: italic;
+  }
+  
+  .history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+  .history-card {
+    background-color: #fffde7;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .history-title {
+    font-weight: bold;
+    color: #6d4c41;
+    margin-bottom: 0.3rem;
+  }
+  
+  .history-points {
+    color: #ef6c00;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .history-status {
+    font-size: 0.9rem;
+    color: #455a64;
+  }
+  
+  .history-status.approved {
+    color: #2e7d32;
+  }
+  .history-status.rejected {
+    color: #c62828;
+  }
+  
+  .rejection-comment {
+    display: block;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #d84315;
+  }
+  
