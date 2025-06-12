@@ -13,15 +13,13 @@ export default function ChildDashboardPage() {
   const [confirmationMsg, setConfirmationMsg] = useState('');
   const [message, setMessage] = useState('');
   const [quote, setQuote] = useState(null);
-  const [approvalShown, setApprovalShown] = useState(() => {
-    const saved = localStorage.getItem(`approval-shown-${childId}`);
-    return saved === 'true';
+  const [approvedMsg, setApprovedMsg] = useState('');
+  const [shownItems, setShownItems] = useState(() => {
+    const saved = localStorage.getItem(`shown-approvals-${childId}`);
+    return saved ? JSON.parse(saved) : { chores: [], rewards: [] };
   });
 
-
-  const [approvedMsg, setApprovedMsg] = useState('');
   const previousApprovals = useRef({ completed: [], rewards: [] });
-
   const hasFetchedQuote = useRef(false);
 
   useEffect(() => {
@@ -30,38 +28,61 @@ export default function ChildDashboardPage() {
   }, [childId]);
 
   const fetchChildData = async () => {
-    const res = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
-    setPoints(res.data.childPoints);
-    setChores(res.data.chores);
-    setRewards(res.data.rewards);
+    try {
+      const res = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
+      setPoints(res.data.childPoints);
+      setChores(res.data.chores);
+      setRewards(res.data.rewards);
 
+      const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
+      const child = profileRes.data.details;
+      setChildName(child.name);
 
-    const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
-    const child = profileRes.data.details;
-    setChildName(child.name);
+      const newCompleted = child.completedChores.map(c => c.choreTitle);
+      const prevCompleted = previousApprovals.current.completed;
+      const newChoreApprovals = newCompleted.filter(chore => !prevCompleted.includes(chore));
 
-    const newCompleted = child.completedChores.map(c => c.choreTitle);
-    const prevCompleted = previousApprovals.current.completed;
+      const rewards = child.pendingRewards || [];
+      const newlyApprovedRewards = rewards.filter(r => r.approved);
+      const newlyRejectedRewards = rewards.filter(r => r.rejected);
+      const prevRewards = previousApprovals.current.rewards;
 
-    const newApprovals = newCompleted.filter(chore => !prevCompleted.includes(chore));
+      const newApproved = newlyApprovedRewards.filter(r => !prevRewards.includes(r.title));
+      const newRejected = newlyRejectedRewards.filter(r => !prevRewards.includes(r.title));
 
-    const approvedRewards = child.requestedRewards?.filter(r => r.status === 'approved') || [];
-    const prevRewards = previousApprovals.current.rewards;
-    const newRewardApprovals = approvedRewards.filter(r => !prevRewards.includes(r.title));
+      const unseenChores = newChoreApprovals.filter(chore => !shownItems.chores.includes(chore));
+      const unseenApprovedRewards = newApproved.filter(r => !shownItems.rewards.includes(r.title));
+      const unseenRejectedRewards = newRejected.filter(r => !shownItems.rewards.includes(r.title));
 
-    if ((newApprovals.length || newRewardApprovals.length) && !approvalShown) {
-      let msg = '';
-      if (newApprovals.length) msg += `🎉 Chores approved: ${newApprovals.join(', ')}. `;
-      if (newRewardApprovals.length) msg += `🎁 Rewards approved: ${newRewardApprovals.map(r => r.title).join(', ')}. `;
-      msg += `🎯 Updated Points: ${res.data.childPoints}`;
-      setApprovedMsg(msg);
-      setApprovalShown(true);
-      localStorage.setItem(`approval-shown-${childId}`, 'true');
-      setTimeout(() => setApprovedMsg(''), 5000);
+      if (unseenChores.length || unseenApprovedRewards.length || unseenRejectedRewards.length) {
+        let msg = '';
+
+        if (unseenChores.length) {
+          msg += `✅ Chores approved: ${unseenChores.join(', ')}. `;
+        }
+        if (unseenApprovedRewards.length) {
+          msg += `🏱 Rewards approved: ${unseenApprovedRewards.map(r => r.title).join(', ')}. `;
+        }
+        if (unseenRejectedRewards.length) {
+          msg += `❌ Rewards rejected: ${unseenRejectedRewards.map(r => r.title).join(', ')}. `;
+        }
+
+        msg += `🎯 Updated Points: ${res.data.childPoints}`;
+        setApprovedMsg(msg);
+
+        const updatedShown = {
+          chores: [...shownItems.chores, ...unseenChores],
+          rewards: [...shownItems.rewards, ...unseenApprovedRewards.map(r => r.title), ...unseenRejectedRewards.map(r => r.title)],
+        };
+        setShownItems(updatedShown);
+        localStorage.setItem(`shown-approvals-${childId}`, JSON.stringify(updatedShown));
+      }
+
+      previousApprovals.current.completed = newCompleted;
+      previousApprovals.current.rewards = [...newApproved, ...newRejected].map(r => r.title);
+    } catch (err) {
+      console.error("Failed to fetch child data:", err);
     }
-
-    previousApprovals.current.completed = newCompleted;
-    previousApprovals.current.rewards = approvedRewards.map(r => r.title);
   };
 
   const fetchQuote = async () => {
@@ -80,14 +101,12 @@ export default function ChildDashboardPage() {
   const handleCompleteChore = async (choreId) => {
     try {
       const res = await axios.put(`http://localhost:3000/api/child/${childId}/choreComplete`, { choreId });
-      setMessage(res.data.message);
+      setMessage(res.data.message || 'Chore marked complete!');
       fetchChildData();
-      setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       console.error('Failed to complete chore:', err);
       const errorMsg = err.response?.data?.message || 'Something went wrong. Please try again.';
       setMessage(errorMsg);
-      setTimeout(() => setMessage(''), 3000);
     }
   };
 
@@ -95,13 +114,17 @@ export default function ChildDashboardPage() {
     try {
       await axios.patch(`http://localhost:3000/api/child/${childId}/redeem`, { rewardId });
       setConfirmationMsg('Reward request sent for approval!');
-      setTimeout(() => setConfirmationMsg(''), 3000);
       fetchChildData();
     } catch (err) {
       console.error('Failed to request reward:', err);
       setConfirmationMsg('Something went wrong. Please try again.');
-      setTimeout(() => setConfirmationMsg(''), 3000);
     }
+  };
+
+  const closeModal = () => {
+    setMessage('');
+    setConfirmationMsg('');
+    setApprovedMsg('');
   };
 
   return (
@@ -121,7 +144,6 @@ export default function ChildDashboardPage() {
 
           <div className="section chores">
             <h2>Available Chores</h2>
-            {message && <div className="status-msg">{message}</div>}
             <ul>
               {chores.length === 0 ? (
                 <p>No chores available.</p>
@@ -138,7 +160,6 @@ export default function ChildDashboardPage() {
 
           <div className="section rewards">
             <h2>Available Rewards</h2>
-            {confirmationMsg && <div className="status-msg">{confirmationMsg}</div>}
             <ul>
               {rewards.length === 0 ? (
                 <p>No rewards available.</p>
@@ -161,9 +182,10 @@ export default function ChildDashboardPage() {
       </div>
 
       {(message || confirmationMsg || approvedMsg) && (
-        <div className="modal-overlay">
-          <div className="modal-message">
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-message" onClick={(e) => e.stopPropagation()}>
             <p>{message || confirmationMsg || approvedMsg}</p>
+            <button className="modal-close-btn" onClick={closeModal}>Got it</button>
           </div>
         </div>
       )}
