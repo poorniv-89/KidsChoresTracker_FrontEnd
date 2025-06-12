@@ -2,7 +2,8 @@
 
 ChoreBlasterz is a fun and interactive **chore tracking and reward app** designed for families. Built with the **MERN stack**, it helps children complete daily tasks while earning points and rewards, and gives parents an easy dashboard to assign and manage chores.
 
-👉 **[Backend Repository](poorniv-89/KidsChoresTracker_Backend )**
+👉 **[Backend Repository](https://github.com/poorniv-89/KidsChoresTracker_Backend)**
+
 
 ---
 
