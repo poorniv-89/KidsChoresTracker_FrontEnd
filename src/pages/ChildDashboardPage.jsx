@@ -17,7 +17,6 @@ export default function ChildDashboardPage() {
 
   const previousApprovals = useRef({ completed: [], rewards: [] });
   const hasFetchedQuote = useRef(false);
-  const hasShownModalToday = useRef(false);
 
   useEffect(() => {
     if (childId) {
@@ -31,6 +30,19 @@ export default function ChildDashboardPage() {
     return new Date(someDate).toDateString() === today.toDateString();
   };
 
+  const hasModalBeenShownToday = () => {
+    const key = `approvalModalShownDate_${childId}`;
+    const storedDate = localStorage.getItem(key);
+    const todayStr = new Date().toDateString();
+    return storedDate === todayStr;
+  };
+
+  const markModalAsShownToday = () => {
+    const key = `approvalModalShownDate_${childId}`;
+    const todayStr = new Date().toDateString();
+    localStorage.setItem(key, todayStr);
+  };
+
   const fetchChildData = async () => {
     try {
       const res = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
@@ -42,13 +54,17 @@ export default function ChildDashboardPage() {
       const child = profileRes.data.details;
       setChildName(child.name);
 
-      const completedToday = child.completedChores.filter(c => c.status === 'approved' && isToday(c.dateCompleted)).map(c => c.choreTitle);
+      const completedToday = child.completedChores
+        .filter(c => c.status === 'approved' && isToday(c.dateCompleted))
+        .map(c => c.choreTitle);
+
       const approvedRewards = (child.redeemedRewards || [])
-      .filter(r => isToday(r.dateRedeemed))
-      .map(r => r.title);
+        .filter(r => isToday(r.dateRedeemed))
+        .map(r => r.title);
+
       const rejectedRewards = (child.pendingRewards || [])
-      .filter(r => isToday(r.dateRequested) && r.rejected)
-      .map(r => r.title);
+        .filter(r => isToday(r.dateRequested) && r.rejected)
+        .map(r => r.title);
 
       const prevCompleted = previousApprovals.current.completed;
       const prevRewards = previousApprovals.current.rewards;
@@ -57,9 +73,12 @@ export default function ChildDashboardPage() {
       const newApprovedRewards = approvedRewards.filter(title => !prevRewards.includes(title));
       const newRejectedRewards = rejectedRewards.filter(title => !prevRewards.includes(title));
 
-      if (!hasShownModalToday.current && (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length)) {
+      if (
+        !hasModalBeenShownToday() &&
+        (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length)
+      ) {
         const msgLines = [];
-      
+
         if (newChoreApprovals.length) {
           msgLines.push(`✅ Chores approved: ${newChoreApprovals.join(', ')}`);
         }
@@ -69,11 +88,12 @@ export default function ChildDashboardPage() {
         if (newRejectedRewards.length) {
           msgLines.push(`❌ Rewards rejected: ${newRejectedRewards.join(', ')}`);
         }
-      
+
         msgLines.push(`🎯 Updated Points: ${res.data.childPoints}`);
         setApprovedMsg(msgLines);
-        hasShownModalToday.current = true;
+        markModalAsShownToday(); // ✅ Save to localStorage
       }
+
       previousApprovals.current.completed = completedToday;
       previousApprovals.current.rewards = [...approvedRewards, ...rejectedRewards];
     } catch (err) {
