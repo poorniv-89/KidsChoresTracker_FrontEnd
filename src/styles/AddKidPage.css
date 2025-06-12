@@ -1,0 +1,55 @@
+/* === AddKidPage Styles === */
+.add-kid-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #e0f7fa;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Fredoka', sans-serif;
+    color: #004d40;
+    text-align: center;
+  }
+  
+  .add-kid-container h1 {
+    font-size: 2rem;
+    color: #00796b;
+    margin-bottom: 1.5rem;
+  }
+  
+  .add-kid-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .add-kid-container label {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .add-kid-container input[type="text"] {
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #ffffff;
+    width: 15rem;
+  }
+  
+  .add-kid-container button {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 10rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-kid-container button:hover {
+    background-color: #00897b;
+  }
