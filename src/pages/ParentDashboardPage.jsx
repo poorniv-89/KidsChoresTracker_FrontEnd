@@ -11,6 +11,7 @@ export default function ParentDashboardPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [pendingChores, setPendingChores] = useState([]);
+    const [pendingRewards, setPendingRewards] = useState([]);
     const [rejectingChore, setRejectingChore] = useState(null);
     const [rejectionComment, setRejectionComment] = useState('');
 
@@ -18,24 +19,10 @@ export default function ParentDashboardPage() {
         try {
             const response = await axios.get(`http://localhost:3000/api/parent/${parentId}`);
             const data = response.data.parentDetails;
+
             setParentData(data);
-
-            const pendingList = [];
-            data.kids.forEach(kid => {
-                kid.completedChores?.forEach(chore => {
-                    if (chore.status === 'pending') {
-                        pendingList.push({
-                            choreId: chore._id,
-                            choreTitle: chore.choreTitle,
-                            pointsEarned: chore.pointsEarned,
-                            childId: kid._id,
-                            kidName: kid.name
-                        });
-                    }
-                });
-            });
-
-            setPendingChores(pendingList);
+            setPendingChores(response.data.pendingChores || []);
+            setPendingRewards(response.data.pendingRewards || []);
             setLoading(false);
         } catch (err) {
             setError('Failed to load Parent dashboard data');
@@ -75,7 +62,29 @@ export default function ParentDashboardPage() {
             console.error('Error rejecting chore:', err);
         }
     };
+    const handleApproveReward = async (childId, rewardId) => {
+        try {
+            await axios.post(`http://localhost:3000/api/parent/${parentId}/approveReward`, {
+                childId,
+                rewardId
+            });
+            fetchParentData();
+        } catch (err) {
+            console.error('Error approving reward:', err);
+        }
+    };
 
+    const handleRejectReward = async (childId, rewardId) => {
+        try {
+            await axios.post(`http://localhost:3000/api/parent/${parentId}/rejectReward`, {
+                childId,
+                rewardId
+            });
+            fetchParentData();
+        } catch (err) {
+            console.error('Error rejecting reward:', err);
+        }
+    };
     if (!isParentLoggedIn) return <p>Please log in to view your dashboard.</p>;
     if (loading) return <p>Loading dashboard...</p>;
     if (error) return <p>{error}</p>;
@@ -124,6 +133,26 @@ export default function ParentDashboardPage() {
                                         </div>
                                     </div>
                                 )}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </section>
+            <section className="pending-rewards">
+                <h2>Pending Reward Requests</h2>
+                {pendingRewards.length === 0 ? (
+                    <p>No pending reward requests right now.</p>
+                ) : (
+                    <ul>
+                        {pendingRewards.map((reward) => (
+                            <li key={reward.rewardId}>
+                                <div className="chore-details">
+                                    <strong>{reward.kidName}</strong>: {reward.title} – {reward.pointsCost} pts
+                                </div>
+                                <div className="button-group">
+                                    <button onClick={() => handleApproveReward(reward.childId, reward.rewardId)}>Approve</button>
+                                    <button className="reject" onClick={() => handleRejectReward(reward.childId, reward.rewardId)}>Reject</button>
+                                </div>
                             </li>
                         ))}
                     </ul>
