@@ -1,166 +1,221 @@
-/* === Parent Dashboard Wrapper === */
+/* === Dashboard Wrapper === */
 .parent-dashboard {
-    max-width: 750px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #ddfafa;
-    border-radius: 16px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    font-family: 'Fredoka', sans-serif;
-    color: #2c3e50;
-  }
-  
-  /* === Heading === */
-  .parent-dashboard h1 {
-    text-align: center;
-   color: #3a4cf2;
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* === Summary Stats === */
-  .summary {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    background: linear-gradient(to right, #95f2f8, #f6a972);
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 2rem;
-    color: rgb(250, 250, 250);
-    font-weight: bold;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    text-align: center;
-  }
-  
-  .summary div {
-    padding: 0.5rem 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.4);
-  }
-  .summary div:last-child {
-    border-bottom: none;
-  }
-  
-  /* === Pending Chores Section === */
-  .pending-chores {
-    margin-bottom: 2rem;
-  }
-  
-  .pending-chores h2 {
-    color: #f39c12;
-    font-size: 1.6rem;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .pending-chores ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .pending-chores li {
-    background-color: #fffbea;
-    padding: 1rem;
-    border-left: 6px solid #f1c40f;
-    border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
-    font-size: 0.95rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .pending-chores .chore-details {
-    flex: 1;
-    color: #d35400;
-    font-weight: bold;
-  }
-  
-  .pending-chores .button-group {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .pending-chores .action-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-  
-  .pending-chores textarea {
-    flex: 1;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 0.9rem;
-    background-color: #fbfbfb;
-    width: 100%;
-  }
-  
-  .pending-chores button {
-    background-color: #16a085;
-    color: white;
-    border: none;
-    padding: 0.4rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: background 0.3s ease;
-  }
-  
-  .pending-chores button:hover {
-    background-color: #138d75;
-  }
-  
-  .pending-chores button.reject {
-    background-color: #c0392b;
-  }
-     
-  .pending-chores textarea {
-    margin-top: 0.6rem;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 0.9rem;
-    width: 100%;
-    background-color: #fffef6;
-  }
-  
-  /* === Quick Actions Section === */
-  .quick-actions {
-    text-align: center;
-    padding-top: 1rem;
-    border-top: 2px dashed #ccc;
-    margin-top: 2rem;
-  }
-  
-  .quick-actions h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    color: #3a4cf2;
-  }
-  
-  .quick-actions button {
-    background-color: #5cb4e7;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    margin: 0.5rem;
-    font-size: 0.95rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .quick-actions button:hover {
-    background-color: #34cfd4a8;
-  }
-  
+  max-width: 750px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ddfafa;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Fredoka', sans-serif;
+  color: #2c3e50;
+}
+
+/* === Heading === */
+.parent-dashboard h1 {
+  text-align: center;
+  color: #3a4cf2;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+/* === Summary Section === */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: linear-gradient(to right, #95f2f8, #f6a972);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  color: rgb(250, 250, 250);
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.summary div {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.4);
+}
+.summary div:last-child {
+  border-bottom: none;
+}
+
+/* === Shared Section Styles === */
+.pending-chores,
+.pending-rewards {
+  margin-bottom: 2rem;
+}
+
+.pending-chores h2,
+.pending-rewards h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.pending-chores ul,
+.pending-rewards ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pending-chores li,
+.pending-rewards li {
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* === Pending Chores Specific === */
+.pending-chores h2 {
+  color: #f39c12;
+}
+.pending-chores li {
+  background-color: #fffbea;
+  border-left: 6px solid #f1c40f;
+}
+.pending-chores .chore-details {
+  color: #d35400;
+  font-weight: bold;
+}
+
+/* === Pending Rewards Specific === */
+.pending-rewards h2 {
+  color: #009688;
+}
+.pending-rewards li {
+  background-color: #e0f2f1;
+  border-left: 6px solid #00796b;
+}
+.pending-rewards .chore-details {
+  font-weight: bold;
+  color: #004d40;
+}
+
+/* === Shared Button & Textarea Styles === */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+textarea {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  width: 100%;
+  background-color: #fffef6;
+  margin-top: 0.6rem;
+}
+
+/* === Rejection Comment Style === */
+.rejection-comment {
+  background-color: #fff3f3;
+  border-left: 4px solid #e57373;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: #c62828;
+  font-style: italic;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+/* === Buttons === */
+button {
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: background 0.3s ease;
+}
+
+.pending-chores button,
+.pending-rewards button {
+  background-color: #26a69a;
+  color: white;
+}
+
+.pending-chores button:hover,
+.pending-rewards button:hover {
+  background-color: #00897b;
+}
+
+button.reject {
+  background-color: #ef5350;
+  color: white;
+}
+
+button.reject:hover {
+  background-color: #c62828;
+}
+
+/* === Action Row === */
+.action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* === Quick Actions Section === */
+.quick-actions {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 2px dashed #ccc;
+  margin-top: 2rem;
+}
+
+.quick-actions h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #3a4cf2;
+}
+
+.quick-actions button {
+  background-color: #5cb4e7;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.quick-actions button:hover {
+  background-color: #34cfd4a8;
+}
+
+/* === Modal === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-message {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}

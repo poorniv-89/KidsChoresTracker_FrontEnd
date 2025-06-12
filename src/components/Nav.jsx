@@ -19,9 +19,10 @@ export default function Nav() {
   return (
     <nav className="homeNav">
       <div className="navContainer">
-        <Link to="/" className="logoLink">
+        <Link to={isParentLoggedIn ? "/parent-dashboard" : "/"} className="logoLink">
           <img src={ChoreBlasterzLogo} alt="ChoreBlasterz Logo" className="logo" />
         </Link>
+
         <ul className="navList">
           {isParentLoggedIn ? (
             <>

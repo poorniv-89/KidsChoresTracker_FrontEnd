@@ -12,6 +12,9 @@ export default function ParentDashboardPage() {
     const [error, setError] = useState('');
     const [pendingChores, setPendingChores] = useState([]);
     const [pendingRewards, setPendingRewards] = useState([]);
+    const [rejectingReward, setRejectingReward] = useState(null);
+    const [rewardRejectionComment, setRewardRejectionComment] = useState('');
+    const [responseMsg, setResponseMsg] = useState('');
     const [rejectingChore, setRejectingChore] = useState(null);
     const [rejectionComment, setRejectionComment] = useState('');
 
@@ -74,15 +77,23 @@ export default function ParentDashboardPage() {
         }
     };
 
-    const handleRejectReward = async (childId, rewardId) => {
+    const handleRejectReward = async (childId, rewardId, comment = '') => {
         try {
             await axios.post(`http://localhost:3000/api/parent/${parentId}/rejectReward`, {
                 childId,
-                rewardId
+                rewardId,
+                rejectionComment: comment
             });
+            setResponseMsg('Reward request rejected.');
+            setRejectingReward(null);
+            setRewardRejectionComment('');
             fetchParentData();
+
+            setTimeout(() => setResponseMsg(''), 2000);
         } catch (err) {
             console.error('Error rejecting reward:', err);
+            setResponseMsg('Something went wrong while rejecting reward.');
+            setTimeout(() => setResponseMsg(''), 2000);
         }
     };
     if (!isParentLoggedIn) return <p>Please log in to view your dashboard.</p>;
@@ -151,8 +162,26 @@ export default function ParentDashboardPage() {
                                 </div>
                                 <div className="button-group">
                                     <button onClick={() => handleApproveReward(reward.childId, reward.rewardId)}>Approve</button>
-                                    <button className="reject" onClick={() => handleRejectReward(reward.childId, reward.rewardId)}>Reject</button>
+                                    <button className="reject" onClick={() => setRejectingReward(reward)}>Reject</button>
                                 </div>
+
+                                {rejectingReward?.rewardId === reward.rewardId && (
+                                    <div className="action-row">
+                                        <textarea
+                                            placeholder="Enter rejection reason"
+                                            value={rewardRejectionComment}
+                                            onChange={(e) => setRewardRejectionComment(e.target.value)}
+                                            rows={2}
+                                        />
+                                        <div className="button-group">
+                                            <button onClick={() => handleRejectReward(reward.childId, reward.rewardId, rewardRejectionComment)}>Reject</button>
+                                            <button className="reject" onClick={() => {
+                                                setRejectingReward(null);
+                                                setRewardRejectionComment('');
+                                            }}>Cancel</button>
+                                        </div>
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -164,6 +193,13 @@ export default function ParentDashboardPage() {
                 <button onClick={() => navigate('/chores')}>➕ Add Chore</button>
                 <button onClick={() => navigate('/rewards')}>🎁 Add Reward</button>
             </section>
+            {responseMsg && (
+                <div className="modal-overlay">
+                    <div className="modal-message">
+                        <p>{responseMsg}</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
