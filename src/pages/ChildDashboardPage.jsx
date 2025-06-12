@@ -13,19 +13,23 @@ export default function ChildDashboardPage() {
   const [confirmationMsg, setConfirmationMsg] = useState('');
   const [message, setMessage] = useState('');
   const [quote, setQuote] = useState(null);
-  const [approvedMsg, setApprovedMsg] = useState('');
-  const [shownItems, setShownItems] = useState(() => {
-    const saved = localStorage.getItem(`shown-approvals-${childId}`);
-    return saved ? JSON.parse(saved) : { chores: [], rewards: [] };
-  });
+  const [approvedMsg, setApprovedMsg] = useState([]);
 
   const previousApprovals = useRef({ completed: [], rewards: [] });
   const hasFetchedQuote = useRef(false);
+  const hasShownModalToday = useRef(false);
 
   useEffect(() => {
-    fetchChildData();
-    fetchQuote();
+    if (childId) {
+      fetchChildData();
+      fetchQuote();
+    }
   }, [childId]);
+
+  const isToday = (someDate) => {
+    const today = new Date();
+    return new Date(someDate).toDateString() === today.toDateString();
+  };
 
   const fetchChildData = async () => {
     try {
@@ -38,48 +42,40 @@ export default function ChildDashboardPage() {
       const child = profileRes.data.details;
       setChildName(child.name);
 
-      const newCompleted = child.completedChores.map(c => c.choreTitle);
-      const prevCompleted = previousApprovals.current.completed;
-      const newChoreApprovals = newCompleted.filter(chore => !prevCompleted.includes(chore));
+      const completedToday = child.completedChores.filter(c => c.status === 'approved' && isToday(c.dateCompleted)).map(c => c.choreTitle);
+      const approvedRewards = (child.redeemedRewards || [])
+      .filter(r => isToday(r.dateRedeemed))
+      .map(r => r.title);
+      const rejectedRewards = (child.pendingRewards || [])
+      .filter(r => isToday(r.dateRequested) && r.rejected)
+      .map(r => r.title);
 
-      const rewards = child.pendingRewards || [];
-      const newlyApprovedRewards = rewards.filter(r => r.approved);
-      const newlyRejectedRewards = rewards.filter(r => r.rejected);
+      const prevCompleted = previousApprovals.current.completed;
       const prevRewards = previousApprovals.current.rewards;
 
-      const newApproved = newlyApprovedRewards.filter(r => !prevRewards.includes(r.title));
-      const newRejected = newlyRejectedRewards.filter(r => !prevRewards.includes(r.title));
+      const newChoreApprovals = completedToday.filter(title => !prevCompleted.includes(title));
+      const newApprovedRewards = approvedRewards.filter(title => !prevRewards.includes(title));
+      const newRejectedRewards = rejectedRewards.filter(title => !prevRewards.includes(title));
 
-      const unseenChores = newChoreApprovals.filter(chore => !shownItems.chores.includes(chore));
-      const unseenApprovedRewards = newApproved.filter(r => !shownItems.rewards.includes(r.title));
-      const unseenRejectedRewards = newRejected.filter(r => !shownItems.rewards.includes(r.title));
-
-      if (unseenChores.length || unseenApprovedRewards.length || unseenRejectedRewards.length) {
-        let msg = '';
-
-        if (unseenChores.length) {
-          msg += `✅ Chores approved: ${unseenChores.join(', ')}. `;
+      if (!hasShownModalToday.current && (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length)) {
+        const msgLines = [];
+      
+        if (newChoreApprovals.length) {
+          msgLines.push(`✅ Chores approved: ${newChoreApprovals.join(', ')}`);
         }
-        if (unseenApprovedRewards.length) {
-          msg += `🏱 Rewards approved: ${unseenApprovedRewards.map(r => r.title).join(', ')}. `;
+        if (newApprovedRewards.length) {
+          msgLines.push(`🎁 Rewards approved: ${newApprovedRewards.join(', ')}`);
         }
-        if (unseenRejectedRewards.length) {
-          msg += `❌ Rewards rejected: ${unseenRejectedRewards.map(r => r.title).join(', ')}. `;
+        if (newRejectedRewards.length) {
+          msgLines.push(`❌ Rewards rejected: ${newRejectedRewards.join(', ')}`);
         }
-
-        msg += `🎯 Updated Points: ${res.data.childPoints}`;
-        setApprovedMsg(msg);
-
-        const updatedShown = {
-          chores: [...shownItems.chores, ...unseenChores],
-          rewards: [...shownItems.rewards, ...unseenApprovedRewards.map(r => r.title), ...unseenRejectedRewards.map(r => r.title)],
-        };
-        setShownItems(updatedShown);
-        localStorage.setItem(`shown-approvals-${childId}`, JSON.stringify(updatedShown));
+      
+        msgLines.push(`🎯 Updated Points: ${res.data.childPoints}`);
+        setApprovedMsg(msgLines);
+        hasShownModalToday.current = true;
       }
-
-      previousApprovals.current.completed = newCompleted;
-      previousApprovals.current.rewards = [...newApproved, ...newRejected].map(r => r.title);
+      previousApprovals.current.completed = completedToday;
+      previousApprovals.current.rewards = [...approvedRewards, ...rejectedRewards];
     } catch (err) {
       console.error("Failed to fetch child data:", err);
     }
@@ -88,7 +84,6 @@ export default function ChildDashboardPage() {
   const fetchQuote = async () => {
     if (hasFetchedQuote.current) return;
     hasFetchedQuote.current = true;
-
     try {
       const res = await fetch('https://api.realinspire.live/v1/quotes/random?limit=1&maxLength=120');
       const data = await res.json();
@@ -101,10 +96,14 @@ export default function ChildDashboardPage() {
   const handleCompleteChore = async (choreId) => {
     try {
       const res = await axios.put(`http://localhost:3000/api/child/${childId}/choreComplete`, { choreId });
-      setMessage(res.data.message || 'Chore marked complete!');
+      const responseMsg = res.data.message || 'Chore marked complete!';
+      if (responseMsg.toLowerCase().includes('already')) {
+        setApprovedMsg([responseMsg]);
+      } else {
+        setMessage(responseMsg);
+      }
       fetchChildData();
     } catch (err) {
-      console.error('Failed to complete chore:', err);
       const errorMsg = err.response?.data?.message || 'Something went wrong. Please try again.';
       setMessage(errorMsg);
     }
@@ -116,7 +115,6 @@ export default function ChildDashboardPage() {
       setConfirmationMsg('Reward request sent for approval!');
       fetchChildData();
     } catch (err) {
-      console.error('Failed to request reward:', err);
       setConfirmationMsg('Something went wrong. Please try again.');
     }
   };
@@ -124,7 +122,7 @@ export default function ChildDashboardPage() {
   const closeModal = () => {
     setMessage('');
     setConfirmationMsg('');
-    setApprovedMsg('');
+    setApprovedMsg([]);
   };
 
   return (
@@ -181,10 +179,18 @@ export default function ChildDashboardPage() {
         </div>
       </div>
 
-      {(message || confirmationMsg || approvedMsg) && (
+      {(message || confirmationMsg || approvedMsg.length > 0) && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-message" onClick={(e) => e.stopPropagation()}>
-            <p>{message || confirmationMsg || approvedMsg}</p>
+            {approvedMsg.length > 0 ? (
+              <ul className="status-list">
+                {approvedMsg.map((line, index) => (
+                  <li key={index}>{line}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{message || confirmationMsg}</p>
+            )}
             <button className="modal-close-btn" onClick={closeModal}>Got it</button>
           </div>
         </div>
