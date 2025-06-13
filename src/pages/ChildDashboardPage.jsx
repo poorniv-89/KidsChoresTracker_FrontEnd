@@ -30,21 +30,10 @@ export default function ChildDashboardPage() {
     return new Date(someDate).toDateString() === today.toDateString();
   };
 
-  const hasModalBeenShownToday = () => {
-    const key = `approvalModalShownDate_${childId}`;
-    const storedDate = localStorage.getItem(key);
-    const todayStr = new Date().toDateString();
-    return storedDate === todayStr;
-  };
-
-  const markModalAsShownToday = () => {
-    const key = `approvalModalShownDate_${childId}`;
-    const todayStr = new Date().toDateString();
-    localStorage.setItem(key, todayStr);
-  };
-
   const fetchChildData = async () => {
     try {
+      const cameFromNav = sessionStorage.getItem('cameFromDashboardNav') === 'true';
+
       const res = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
       setPoints(res.data.childPoints);
       setChores(res.data.chores);
@@ -74,8 +63,8 @@ export default function ChildDashboardPage() {
       const newRejectedRewards = rejectedRewards.filter(title => !prevRewards.includes(title));
 
       if (
-        !hasModalBeenShownToday() &&
-        (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length)
+        (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length) &&
+        !cameFromNav
       ) {
         const msgLines = [];
 
@@ -91,8 +80,9 @@ export default function ChildDashboardPage() {
 
         msgLines.push(`🎯 Updated Points: ${res.data.childPoints}`);
         setApprovedMsg(msgLines);
-        markModalAsShownToday(); // ✅ Save to localStorage
       }
+
+      sessionStorage.removeItem('cameFromDashboardNav');
 
       previousApprovals.current.completed = completedToday;
       previousApprovals.current.rewards = [...approvedRewards, ...rejectedRewards];

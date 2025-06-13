@@ -8,8 +8,12 @@ export default function ChildNavbar({ childId }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();            
-    navigate('/');        
+    logout();
+    navigate('/');
+  };
+
+  const handleDashboardClick = () => {
+    sessionStorage.setItem('cameFromDashboardNav', 'true');
   };
 
   return (
@@ -20,7 +24,7 @@ export default function ChildNavbar({ childId }) {
         </Link>
         <ul className="navList">
           <li>
-            <Link to={`/child/${childId}`}>Dashboard</Link>
+            <Link to={`/child/${childId}`} onClick={handleDashboardClick}>Dashboard</Link>
           </li>
           <li>
             <Link to={`/child/${childId}/history`}>History</Link>
