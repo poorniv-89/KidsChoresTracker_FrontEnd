@@ -45,7 +45,7 @@ export default function ParentDashboardPage() {
       await axios.post(`http://localhost:3000/api/parent/${parentId}/approveChore`, { childId, choreId });
       setResponseMsg('✅ Chore approved!');
       fetchParentData();
-      setTimeout(() => setResponseMsg(''), 3000);
+      setTimeout(() => setResponseMsg(''), 5000);
     } catch (err) {
       console.error('Error approving chore:', err);
     }
@@ -62,7 +62,7 @@ export default function ParentDashboardPage() {
       setRejectingChore(null);
       setRejectionComment('');
       fetchParentData();
-      setTimeout(() => setResponseMsg(''), 3000);
+      setTimeout(() => setResponseMsg(''), 5000);
     } catch (err) {
       console.error('Error rejecting chore:', err);
     }
@@ -75,7 +75,7 @@ export default function ParentDashboardPage() {
       setRejectingReward(null);
       setRewardRejectionComment('');
       fetchParentData();
-      setTimeout(() => setResponseMsg(''), 3000);
+      setTimeout(() => setResponseMsg(''), 5000);
     } catch (err) {
       console.error('Error approving reward:', err);
     }
@@ -92,11 +92,11 @@ export default function ParentDashboardPage() {
       setRejectingReward(null);
       setRewardRejectionComment('');
       fetchParentData();
-      setTimeout(() => setResponseMsg(''), 3000);
+      setTimeout(() => setResponseMsg(''), 5000);
     } catch (err) {
       console.error('Error rejecting reward:', err);
       setResponseMsg('⚠️ Something went wrong while rejecting reward.');
-      setTimeout(() => setResponseMsg(''), 3000);
+      setTimeout(() => setResponseMsg(''), 5000);
     }
   };
 
@@ -201,13 +201,13 @@ export default function ParentDashboardPage() {
       </section>
 
       {responseMsg && (
-        <div className="modal-overlay" onClick={() => setResponseMsg('')}>
-          <div className="modal-message" onClick={e => e.stopPropagation()}>
-            <p>{responseMsg}</p>
-            <button className="modal-close-btn" onClick={() => setResponseMsg('')}>Got it</button>
-          </div>
-        </div>
-      )}
+  <div className="parent-modal-overlay" onClick={() => setResponseMsg('')}>
+    <div className="parent-modal-message" onClick={e => e.stopPropagation()}>
+      <p>{responseMsg}</p>
+      <button className="modal-close-btn" onClick={() => setResponseMsg('')}>Got it</button>
+    </div>
+  </div>
+)}
     </div>
   );
 }

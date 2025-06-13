@@ -13,11 +13,9 @@ ChoreBlasterz is a fun and interactive **chore tracking and reward app** designe
 - **React Router DOM** — client-side routing  
 - **Axios** — handle HTTP requests to backend  
 - **React Icons** — icon library for UI elements  
-- **React Modal** — popup/modal component  
 - **Context API** — global state management (e.g., authentication)  
 - **CSS** — custom styling with external stylesheets  
 - **Vite** — fast development build tool  
-- **.env Configuration** — manage environment-specific variables  
 - **LocalStorage** — persist modal state across sessions  
 - **React Hooks** — like `useEffect`, `useRef`, `useState` for state and lifecycle handling  
 
@@ -55,6 +53,22 @@ ChoreBlasterz is a fun and interactive **chore tracking and reward app** designe
 - Mark chores as done
 - Request rewards
 - See motivational quotes
+
+## 🌐 Third-Party API Integration
+
+To make the app more engaging and motivational for kids, we integrated an external quotes API.
+
+### 🧠 API Used
+
+**[RealInspire Quotes API](https://api.realinspire.live/)**  
+This API provides short, inspiring quotes from a wide range of authors.
+
+### 🔍 Purpose
+
+Motivational quotes appear at the top of the **Child Dashboard** to:
+
+- Encourage kids to complete their chores positively.
+- Add a fresh, engaging touch each time the page loads.
 
 ## 🛠️ Project Setup Guide
 
