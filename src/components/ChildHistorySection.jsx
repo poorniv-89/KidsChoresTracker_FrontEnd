@@ -1,6 +1,11 @@
 import React from 'react';
 
-export default function ChildHistorySection({ completedChores = [], pendingRewards = [], redeemedRewards = [] }) {
+export default function ChildHistorySection({
+  completedChores = [],
+  pendingRewards = [],
+  redeemedRewards = [],
+  rejectedRewards = []
+}) {
   return (
     <div className="history-dashboard-container">
 
@@ -55,6 +60,30 @@ export default function ChildHistorySection({ completedChores = [], pendingRewar
       </div>
 
       <div className="history-section">
+        <h2 className="history-heading rejected">❌ Rejected Reward Requests</h2>
+        {rejectedRewards.length === 0 ? (
+          <p className="history-empty">No rejected rewards.</p>
+        ) : (
+          <ul className="history-list">
+            {rejectedRewards.map((reward, i) => (
+              <li className="history-card" key={i}>
+                <div className="history-title">{reward.title}</div>
+                <div className="history-points">{reward.pointsCost} pts</div>
+                <div className="history-status">
+                  Rejected on {new Date(reward.dateRequested).toLocaleDateString()}
+                  {reward.rejectionComment && (
+                    <div className="rejection-comment">
+                      Reason: {reward.rejectionComment}
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="history-section">
         <h2 className="history-heading redeemed">🏆 Redeemed Rewards</h2>
         {redeemedRewards.length === 0 ? (
           <p className="history-empty">No rewards redeemed yet.</p>
@@ -72,6 +101,7 @@ export default function ChildHistorySection({ completedChores = [], pendingRewar
           </ul>
         )}
       </div>
+
     </div>
   );
 }

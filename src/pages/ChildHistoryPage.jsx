@@ -6,10 +6,11 @@ import ChildHistorySection from '../components/ChildHistorySection';
 import '../styles/ChildHistoryPage.css';
 
 export default function ChildHistoryPage() {
-  const { childId } = useParams(); 
+  const { childId } = useParams();
   const [completedChores, setCompletedChores] = useState([]);
   const [pendingRewards, setPendingRewards] = useState([]);
   const [redeemedRewards, setRedeemedRewards] = useState([]);
+  const [rejectedRewards, setRejectedRewards] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -17,21 +18,23 @@ export default function ChildHistoryPage() {
       try {
         const res = await axios.get(`http://localhost:3000/api/child/${childId}`);
         const data = res.data.details;
-  
+
         setCompletedChores(data.completedChores || []);
         const allRewards = data.pendingRewards || [];
 
         const newPending = allRewards.filter(r => !r.approved && !r.rejected);
+        const rejected = allRewards.filter(r => r.rejected);
         const redeemed = data.redeemedRewards || [];
 
         setPendingRewards(newPending);
+        setRejectedRewards(rejected);
         setRedeemedRewards(redeemed);
       } catch (err) {
         console.error("Failed to fetch history:", err);
         setError('Something went wrong while loading history.');
       }
     };
-  
+
     fetchChildHistory();
   }, [childId]);
 
@@ -44,6 +47,7 @@ export default function ChildHistoryPage() {
           completedChores={completedChores}
           pendingRewards={pendingRewards}
           redeemedRewards={redeemedRewards}
+          rejectedRewards={rejectedRewards}
         />
       </div>
     </>
