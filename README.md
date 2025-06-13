@@ -56,7 +56,7 @@ ChoreBlasterz is a fun and interactive **chore tracking and reward app** designe
 
 ## 🌐 Third-Party API Integration
 
-To make the app more engaging and motivational for kids, we integrated an external quotes API.
+To make the app more engaging and motivational for kids, external quotes API has been integrated.
 
 ### 🧠 API Used
 
@@ -71,8 +71,12 @@ Motivational quotes appear at the top of the **Child Dashboard** to:
 - Add a fresh, engaging touch each time the page loads.
 
 ## 🛠️ Project Setup Guide
+This section outlines how to get started with the frontend of the ChoreBlasterz app using the Vite + React stack.
 
-### 1. Wireframing
+---
+
+**1. Wireframing**
+
 Plan essential screens for both **Parent** and **Child** roles:
 - Dashboard
 - Chore & Reward Lists
@@ -81,51 +85,60 @@ Plan essential screens for both **Parent** and **Child** roles:
 
 ---
 
-### 2. Initialize Frontend
+**2. Initialize Frontend**
 
 ```bash
 npm create vite@latest choreblasterz-frontend --template react
 cd choreblasterz-frontend
 npm install
-
-### 3. Folder Structure
-
-📦src
-┣ 📂components // Navbar, Modals, Cards
-┣ 📂pages // ParentDashboard, ChildDashboard, History
-┣ 📂styles // Custom CSS
-┣ App.jsx
-┗ main.jsx
-
+```
 
 ---
 
-### 4. Setup Routing
+**3. Folder Structure**
+
+```text
+📦src  
+┣ 📂components        // Navbar, Modals, Cards  
+┣ 📂pages             // ParentDashboard, ChildDashboard, History  
+┣ 📂styles            // Custom CSS  
+┣ App.jsx  
+┗ main.jsx
+```
+
+---
+
+**4. Setup Routing**
 
 Install React Router:
 
 ```bash
 npm install react-router-dom
+```
 
-Then configure your routing in main.jsx and App.jsx using:
+Then configure your routing in `main.jsx` and `App.jsx` using:
 
+```jsx
 <BrowserRouter>
   <Routes>
     {/* Define your routes here */}
   </Routes>
 </BrowserRouter>
+```
 
-### 5. API Integration
+---
+
+**5. API Integration**
 
 Install Axios:
 
+```bash
 npm install axios
+```
+
 Use Axios to connect your frontend with backend APIs for:
 
-✅ Assigning & managing chores
-
-✅ Completing chores
-
-🎁 Requesting & approving rewards
-
+✅ Assigning & managing chores  
+✅ Completing chores  
+🎁 Requesting & approving rewards  
 👪 Fetching child/parent dashboards
