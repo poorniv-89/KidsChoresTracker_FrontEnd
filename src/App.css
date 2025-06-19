@@ -301,3 +301,72 @@ footer button:hover {
   color: #d63333;
   font-size: 0.9rem;
 }
+
+/* === Mobile Responsive Adjustments === */
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .heroText h1 {
+    font-size: 2rem;
+  }
+
+  .heroText p {
+    font-size: 1rem;
+  }
+
+  .heroImage img {
+    max-width: 90%;
+  }
+
+  .steps {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step {
+    width: 90%;
+  }
+
+  .features ul {
+    padding: 0 1rem;
+  }
+
+  .authWrapper {
+    margin-top: 5rem;
+    padding: 0 1rem;
+  }
+
+  .authContainer {
+    padding: 1rem;
+  }
+
+  .authContainer form > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .authContainer label {
+    text-align: left;
+    width: 100%;
+  }
+
+  .authContainer input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .navContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .navList {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

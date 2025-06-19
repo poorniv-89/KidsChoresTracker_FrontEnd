@@ -50,3 +50,25 @@
     background-color: #f4511e;
   }
   
+  @media (max-width: 600px) {
+    .chore-form {
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 90%;
+    }
+  
+    .chore-form h2 {
+      font-size: 1.2rem;
+    }
+  
+    .chore-form input {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.9rem;
+    }
+  
+    .chore-form button {
+      font-size: 0.95rem;
+      padding: 0.6rem 1rem;
+    }
+  }
+  

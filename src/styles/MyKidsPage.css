@@ -88,3 +88,44 @@
   .add-kid-button:hover {
     background-color: #00897b;
   }
+
+  @media (max-width: 768px) {
+    .my-kids-container {
+      padding: 1.5rem 1rem;
+    }
+  
+    .my-kids-container h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .my-kids-container p {
+      font-size: 1.1rem;
+    }
+  
+    .kids-grid {
+      gap: 2rem;
+    }
+  
+    .kid-card {
+      width: 100%;
+      max-width: 300px;
+      padding: 1.2rem;
+    }
+  
+    .kid-card h3 {
+      font-size: 1.4rem;
+    }
+  
+    .copy-button {
+      width: 100%;
+      font-size: 0.95rem;
+    }
+  
+    .add-kid-button {
+      width: 90%;
+      max-width: 320px;
+      font-size: 1rem;
+    }
+  }
+  

@@ -53,3 +53,29 @@
   .add-kid-container button:hover {
     background-color: #00897b;
   }
+
+  @media (max-width: 600px) {
+    .add-kid-container {
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+  
+    .add-kid-container h1 {
+      font-size: 1.6rem;
+    }
+  
+    .add-kid-container form {
+      gap: 0.8rem;
+    }
+  
+    .add-kid-container input[type="text"] {
+      width: 100%;
+      font-size: 0.95rem;
+    }
+  
+    .add-kid-container button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 0.6rem 1rem;
+    }
+  }

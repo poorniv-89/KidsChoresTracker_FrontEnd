@@ -135,3 +135,52 @@
     animation: fadeIn 0.3s ease;
   }
   
+  @media (max-width: 600px) {
+    .child-history-page {
+      padding: 1rem 0.5rem;
+      background-position: center top;
+      background-size: cover;
+    }
+  
+    .history-dashboard-container {
+      padding: 1rem;
+      width: 95%;
+      border-radius: 1.5rem;
+    }
+  
+    .history-heading {
+      font-size: 1.1rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.75rem;
+    }
+  
+    .history-card {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 0.95rem;
+    }
+  
+    .history-title {
+      font-size: 1rem;
+    }
+  
+    .history-points {
+      font-size: 0.95rem;
+    }
+  
+    .history-status {
+      font-size: 0.85rem;
+    }
+  
+    .rejection-comment {
+      font-size: 0.8rem;
+      padding: 0.3rem;
+    }
+  
+    .modal-message {
+      padding: 1.5rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 1rem;
+      width: 90%;
+    }
+  }
