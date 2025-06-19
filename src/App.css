@@ -348,16 +348,23 @@ footer button:hover {
     padding: 1rem;
     box-sizing: border-box;
   }
-
-  .authContainer form>div {
+  .authContainer form > div {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 0.3rem; 
     width: 100%;
   }
 
+  .authContainer label {
+    text-align: left;
+    width: 100%; 
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
   .authContainer input {
-    max-width: 100%;
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
   }
 
