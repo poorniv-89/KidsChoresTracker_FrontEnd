@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import MyKids from '../components/MyKids';
 import '../styles/MyKidsPage.css'; 
+import API from '../config/api'; 
 
 export default function MyKidsPage() {
   const { isParentLoggedIn, parentId } = useAuth();
@@ -13,11 +13,11 @@ export default function MyKidsPage() {
   useEffect(() => {
     const fetchKids = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/parent/${parentId}`);
+        const res = await API.get(`/parent/${parentId}`);
         setKids(res.data.parentDetails.kids || []);
-        setLoading(false);
       } catch (err) {
         setError('Failed to load kids');
+      } finally {
         setLoading(false);
       }
     };

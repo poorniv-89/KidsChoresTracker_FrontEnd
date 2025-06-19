@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import ChildNavbar from '../components/ChildNavBar';
 import '../styles/ChildDashboardPage.css';
+import API from '../config/api';
 
 export default function ChildDashboardPage() {
-  const { childId } = useParams();
+  const { childId, token } = useParams();
   const [points, setPoints] = useState(0);
   const [chores, setChores] = useState([]);
   const [rewards, setRewards] = useState([]);
@@ -14,16 +14,15 @@ export default function ChildDashboardPage() {
   const [message, setMessage] = useState('');
   const [quote, setQuote] = useState(null);
   const [approvedMsg, setApprovedMsg] = useState([]);
-
   const previousApprovals = useRef({ completed: [], rewards: [] });
   const hasFetchedQuote = useRef(false);
 
   useEffect(() => {
-    if (childId) {
+    if (childId || token) {
       fetchChildData();
       fetchQuote();
     }
-  }, [childId]);
+  }, [childId, token]);
 
   const isToday = (someDate) => {
     const today = new Date();
@@ -34,16 +33,20 @@ export default function ChildDashboardPage() {
     try {
       const cameFromNav = sessionStorage.getItem('cameFromDashboardNav') === 'true';
 
-      const res = await axios.get(`http://localhost:3000/api/child/${childId}/available`);
-      setPoints(res.data.childPoints);
-      setChores(res.data.chores);
-      setRewards(res.data.rewards);
+      const idOrTokenPath = childId ? `/child/${childId}` : `/child/token/${token}`;
+      const availableRes = await API.get(`${idOrTokenPath}/available`);
+      setPoints(availableRes.data.childPoints);
+      setChores(availableRes.data.chores);
+      setRewards(availableRes.data.rewards);
 
-      const profileRes = await axios.get(`http://localhost:3000/api/child/${childId}`);
-      const child = profileRes.data.details;
-      setChildName(child.name);
+      const profileRes = await API.get(idOrTokenPath);
+      const child = profileRes.data.details || profileRes.data.child || {};
 
-      const completedToday = child.completedChores
+      console.log('✅ Fetched child:', child); // Debug log
+
+      setChildName(child.name || 'Kiddo');
+
+      const completedToday = (child.completedChores || [])
         .filter(c => c.status === 'approved' && isToday(c.dateCompleted))
         .map(c => c.choreTitle);
 
@@ -62,10 +65,7 @@ export default function ChildDashboardPage() {
       const newApprovedRewards = approvedRewards.filter(title => !prevRewards.includes(title));
       const newRejectedRewards = rejectedRewards.filter(title => !prevRewards.includes(title));
 
-      if (
-        (newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length) &&
-        !cameFromNav
-      ) {
+      if ((newChoreApprovals.length || newApprovedRewards.length || newRejectedRewards.length) && !cameFromNav) {
         const msgLines = [];
 
         if (newChoreApprovals.length) {
@@ -78,16 +78,16 @@ export default function ChildDashboardPage() {
           msgLines.push(`❌ Rewards rejected: ${newRejectedRewards.join(', ')}`);
         }
 
-        msgLines.push(`🎯 Updated Points: ${res.data.childPoints}`);
+        msgLines.push(`🎯 Updated Points: ${availableRes.data.childPoints}`);
         setApprovedMsg(msgLines);
       }
 
       sessionStorage.removeItem('cameFromDashboardNav');
-
       previousApprovals.current.completed = completedToday;
       previousApprovals.current.rewards = [...approvedRewards, ...rejectedRewards];
     } catch (err) {
-      console.error("Failed to fetch child data:", err);
+      console.error("❌ Failed to fetch child data:", err);
+      setMessage('Failed to load dashboard. Please check the link or try again.');
     }
   };
 
@@ -99,13 +99,14 @@ export default function ChildDashboardPage() {
       const data = await res.json();
       setQuote({ text: data[0].content, author: data[0].author });
     } catch {
-      console.log('Failed to fetch quote');
+      console.log('⚠️ Failed to fetch quote');
     }
   };
 
   const handleCompleteChore = async (choreId) => {
     try {
-      const res = await axios.put(`http://localhost:3000/api/child/${childId}/choreComplete`, { choreId });
+      const path = childId ? `/child/${childId}/choreComplete` : `/child/token/${token}/choreComplete`;
+      const res = await API.put(path, { choreId });
       const responseMsg = res.data.message || 'Chore marked complete!';
       if (responseMsg.toLowerCase().includes('already')) {
         setApprovedMsg([responseMsg]);
@@ -121,7 +122,8 @@ export default function ChildDashboardPage() {
 
   const handleRequestReward = async (rewardId) => {
     try {
-      await axios.patch(`http://localhost:3000/api/child/${childId}/redeem`, { rewardId });
+      const path = childId ? `/child/${childId}/redeem` : `/child/token/${token}/redeem`;
+      await API.patch(path, { rewardId });
       setConfirmationMsg('Reward request sent for approval!');
       fetchChildData();
     } catch (err) {
@@ -137,7 +139,8 @@ export default function ChildDashboardPage() {
 
   return (
     <>
-      <ChildNavbar childId={childId} />
+      <ChildNavbar childId={childId} token={token} />
+
       <div className="child-dashboard">
         {quote && (
           <div className="quote-standalone">
@@ -147,7 +150,7 @@ export default function ChildDashboardPage() {
         )}
 
         <div className="dashboard-container">
-          <h1 className="welcome">Welcome, {childName}!</h1>
+          <h1 className="welcome">Welcome, {childName || 'Kiddo'}!</h1>
           <div className="points-box">Points: {points}</div>
 
           <div className="section chores">

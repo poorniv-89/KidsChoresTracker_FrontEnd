@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import '../styles/ParentDashboardPage.css'
+import '../styles/ParentDashboardPage.css';
+import API from '../config/api'; 
 
 export default function ParentDashboardPage() {
   const { isParentLoggedIn, parentId } = useAuth();
@@ -21,7 +21,8 @@ export default function ParentDashboardPage() {
 
   const fetchParentData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/parent/${parentId}`);
+      console.log('Fetching dashboard data for parentId:', parentId);
+      const response = await API.get(`/parent/${parentId}`);
       const data = response.data.parentDetails;
 
       setParentData(data);
@@ -37,12 +38,14 @@ export default function ParentDashboardPage() {
   useEffect(() => {
     if (isParentLoggedIn && parentId) {
       fetchParentData();
+    } else {
+      navigate('/login'); 
     }
-  }, [isParentLoggedIn, parentId]);
+  }, [isParentLoggedIn, parentId, navigate]);
 
   const handleApprove = async (childId, choreId) => {
     try {
-      await axios.post(`http://localhost:3000/api/parent/${parentId}/approveChore`, { childId, choreId });
+      await API.post(`/parent/${parentId}/approveChore`, { childId, choreId });
       setResponseMsg('✅ Chore approved!');
       fetchParentData();
       setTimeout(() => setResponseMsg(''), 5000);
@@ -53,7 +56,7 @@ export default function ParentDashboardPage() {
 
   const handleReject = async (childId, choreId, comment = '') => {
     try {
-      await axios.post(`http://localhost:3000/api/parent/${parentId}/rejectChore`, {
+      await API.post(`/parent/${parentId}/rejectChore`, {
         childId,
         choreId,
         rejectionComment: comment
@@ -70,7 +73,7 @@ export default function ParentDashboardPage() {
 
   const handleApproveReward = async (childId, rewardId) => {
     try {
-      await axios.post(`http://localhost:3000/api/parent/${parentId}/approveReward`, { childId, rewardId });
+      await API.post(`/parent/${parentId}/approveReward`, { childId, rewardId });
       setResponseMsg('🎁 Reward request approved!');
       setRejectingReward(null);
       setRewardRejectionComment('');
@@ -83,7 +86,7 @@ export default function ParentDashboardPage() {
 
   const handleRejectReward = async (childId, rewardId, comment = '') => {
     try {
-      await axios.post(`http://localhost:3000/api/parent/${parentId}/rejectReward`, {
+      await API.post(`/parent/${parentId}/rejectReward`, {
         childId,
         rewardId,
         rejectionComment: comment
@@ -100,12 +103,11 @@ export default function ParentDashboardPage() {
     }
   };
 
-  if (!isParentLoggedIn) return <p>Please log in to view your dashboard.</p>;
   if (loading) return <p>Loading dashboard...</p>;
   if (error) return <p>{error}</p>;
 
-  const { name, chores = [], rewards = [], kids = [] } = parentData;
-
+  const { name, chores = [], rewards = [], kids = [] } = parentData || {};
+  if (!parentData) return <p>Loading parent data...</p>;
   return (
     <div className="parent-dashboard">
       <h1>Welcome, {name}</h1>
@@ -201,13 +203,13 @@ export default function ParentDashboardPage() {
       </section>
 
       {responseMsg && (
-  <div className="parent-modal-overlay" onClick={() => setResponseMsg('')}>
-    <div className="parent-modal-message" onClick={e => e.stopPropagation()}>
-      <p>{responseMsg}</p>
-      <button className="modal-close-btn" onClick={() => setResponseMsg('')}>Got it</button>
-    </div>
-  </div>
-)}
+        <div className="parent-modal-overlay" onClick={() => setResponseMsg('')}>
+          <div className="parent-modal-message" onClick={e => e.stopPropagation()}>
+            <p>{responseMsg}</p>
+            <button className="modal-close-btn" onClick={() => setResponseMsg('')}>Got it</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

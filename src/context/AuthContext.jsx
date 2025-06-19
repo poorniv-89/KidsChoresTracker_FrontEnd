@@ -7,7 +7,7 @@ export function AuthProvider({ children }) {
   const [parentId, setParentId] = useState(null);
 
   useEffect(() => {
-    const storedId = localStorage.getItem('parentId');
+    const storedId = sessionStorage.getItem('parentId'); 
     if (storedId) {
       setParentId(storedId);
       setIsParentLoggedIn(true);
@@ -15,15 +15,16 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (id) => {
-    localStorage.setItem('parentId', id);
+    sessionStorage.setItem('parentId', id); 
     setParentId(id);
     setIsParentLoggedIn(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('parentId');
+    sessionStorage.removeItem('parentId');
     setParentId(null);
     setIsParentLoggedIn(false);
+    window.location.href = '/'; 
   };
 
   return (

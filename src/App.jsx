@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
 import './App.css';
 
 import Nav from './components/Nav';
@@ -23,17 +22,28 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/parent-dashboard" element={<ParentDashboardPage />} />
+        
+        {/* Child Dashboard (ID and Token-based access) */}
         <Route path="/child/:childId" element={<ChildDashboardPage />} />
+        <Route path="/child/token/:token" element={<ChildDashboardPage />} />
+
+        {/* Chore and Rewards Pages */}
         <Route path="/chores" element={<ChoreManagementPage />} />
         <Route path="/rewards" element={<RewardsPage />} />
+
+        {/* Informational Pages */}
         <Route path="/how-it-works" element={<HowItWorksPage />} />
-        <Route path="/add-kid" element={<AddKidPage/>}/>
+        <Route path="/add-kid" element={<AddKidPage />} />
         <Route path="/my-kids" element={<MykidsPage />} />
+
+        {/* Child History (ID and Token-based access) */}
         <Route path="/child/:childId/history" element={<ChildHistoryPage />} />
+        <Route path="/child/token/:token/history" element={<ChildHistoryPage />} />
+
+        {/* 404 Fallback */}
         <Route path="*" element={<NotFoundPage />} />
-        
       </Routes>
-      </>
+    </>
   );
 }
 

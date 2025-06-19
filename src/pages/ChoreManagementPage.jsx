@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import ChoreForm from '../components/NewChoresForm';
 import '../styles/ChoreManagementPage.css';
-
+import API from '../config/api'; 
 
 export default function ChoreManagementPage() {
   const { parentId } = useAuth();
@@ -14,7 +13,7 @@ export default function ChoreManagementPage() {
 
   const fetchChores = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/parent/${parentId}`);
+      const res = await API.get(`/parent/${parentId}`);
       setChores(res.data.parentDetails.chores || []);
     } catch (err) {
       setError('Failed to load chores');
@@ -29,7 +28,7 @@ export default function ChoreManagementPage() {
 
   const handleDelete = async (choreId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/parent/${parentId}/chores/${choreId}`);
+      await API.delete(`/parent/${parentId}/chores/${choreId}`);
       fetchChores();
     } catch (err) {
       setError('Failed to delete chore');
@@ -43,10 +42,14 @@ export default function ChoreManagementPage() {
     <div className="chore-management">
       <h1>Manage Chores</h1>
 
-      <ChoreForm choreToEdit={choreToEdit} onSuccess={() => {
-        fetchChores();
-        setChoreToEdit(null);
-      }} />
+      <ChoreForm
+        choreToEdit={choreToEdit}
+        onSuccess={() => {
+          fetchChores();
+          setChoreToEdit(null);
+        }}
+      />
+      
       <ul className="chore-list">
         {chores.length === 0 ? (
           <p>No chores found.</p>

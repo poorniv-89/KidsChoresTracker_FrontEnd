@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import '../styles/NewChoresForm.css'; // make sure to import your CSS
+import '../styles/NewChoresForm.css';
+import API from '../config/api';
 
 export default function ChoreForm({ choreToEdit, onSuccess }) {
   const { parentId } = useAuth();
@@ -23,12 +23,12 @@ export default function ChoreForm({ choreToEdit, onSuccess }) {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:3000/api/parent/${parentId}/chores/${choreToEdit._id}`, {
+        await API.put(`/parent/${parentId}/chores/${choreToEdit._id}`, {
           title,
           points
         });
       } else {
-        await axios.post(`http://localhost:3000/api/parent/${parentId}/chores`, {
+        await API.post(`/parent/${parentId}/chores`, {
           title,
           points
         });

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import API from '../config/api';
 
 export default function AuthPage() {
   const { login } = useAuth();
@@ -12,7 +13,7 @@ export default function AuthPage() {
     password: ''
   });
   const [message, setMessage] = useState('');
-  const baseURL = 'http://localhost:3000/api/parent'
+  const baseURL = `${import.meta.env.VITE_API_BASE_URL}/parent`;
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,15 +22,22 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const url = isSignUp ? `${baseURL}` : `${baseURL}/signin`;
+  
+    const url = isSignUp ? `/parent` : `/parent/signin`;
+  
     try {
-      const res = await axios.post(url, formData);
+      const res = await API.post(url, formData);
+      const { token, parent } = res.data;
+  
+      sessionStorage.setItem('token', token);    
+      sessionStorage.setItem('parentId', parent.id); 
+      
+  
+      login(parent.id);
+  
       setMessage(isSignUp ? 'Signup successful!' : 'Signin successful!');
-      // console.log('response.data:', res.data);
-      login(res.data.parent.id);
       navigate('/parent-dashboard');
-
+  
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || 'Something went wrong. Please try again.';

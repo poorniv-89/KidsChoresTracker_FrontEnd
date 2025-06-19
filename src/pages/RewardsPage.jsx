@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import '../styles/RewardsPage.css'; 
+import '../styles/RewardsPage.css';
+import API from '../config/api'; 
 
 export default function RewardsPage() {
   const { parentId } = useAuth();
@@ -13,7 +13,7 @@ export default function RewardsPage() {
 
   const fetchRewards = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/parent/${parentId}`);
+      const res = await API.get(`/parent/${parentId}`);
       const allRewards = res.data.parentDetails.rewards || [];
       setRewards(allRewards.filter(r => !r.deleted));
     } catch (err) {
@@ -33,7 +33,7 @@ export default function RewardsPage() {
 
     try {
       const newReward = { title: newTitle, pointsCost: parseInt(newPoints) };
-      await axios.post(`http://localhost:3000/api/parent/${parentId}/rewards`, newReward);
+      await API.post(`/parent/${parentId}/rewards`, newReward);
       setNewTitle('');
       setNewPoints('');
       fetchRewards();
@@ -44,7 +44,7 @@ export default function RewardsPage() {
 
   const handleDelete = async (rewardId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/parent/${parentId}/rewards/${rewardId}`);
+      await API.delete(`/parent/${parentId}/rewards/${rewardId}`);
       fetchRewards();
     } catch (err) {
       setError('Failed to delete reward');
@@ -67,7 +67,6 @@ export default function RewardsPage() {
           onChange={(e) => setNewTitle(e.target.value)}
           required
         />
-
         <input
           type="number"
           placeholder="Points Cost"
@@ -75,7 +74,6 @@ export default function RewardsPage() {
           onChange={(e) => setNewPoints(e.target.value)}
           required
         />
-
         <button type="submit">Add Reward</button>
       </form>
 

@@ -4,6 +4,7 @@ import '../styles/MyKidsPage.css';
 
 export default function MyKids({ kids, showAddButton }) {
   const navigate = useNavigate();
+  const appBaseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5173';
 
   return (
     <div className="my-kids-container">
@@ -21,7 +22,7 @@ export default function MyKids({ kids, showAddButton }) {
               <button
                 className="copy-button"
                 onClick={() =>
-                  navigator.clipboard.writeText(`http://localhost:5173/child/${kid._id}`)
+                  navigator.clipboard.writeText(`${appBaseURL}/child/token/${kid.publicLinkToken}`)
                 }
               >
                 📋 Copy Dashboard Link
