@@ -5,7 +5,7 @@ import '../styles/MyKidsPage.css';
 export default function MyKids({ kids, showAddButton }) {
   const navigate = useNavigate();
   const appBaseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5173';
-
+  console.log('APP BASE URL:', appBaseURL);
   return (
     <div className="my-kids-container">
       <h2>My Kids</h2>
