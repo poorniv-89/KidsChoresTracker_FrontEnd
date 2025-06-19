@@ -39,7 +39,7 @@ export default function ParentDashboardPage() {
     if (isParentLoggedIn && parentId) {
       fetchParentData();
     } else {
-      navigate('/login'); 
+      navigate('/'); 
     }
   }, [isParentLoggedIn, parentId, navigate]);
 

@@ -24,7 +24,6 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem('parentId');
     setParentId(null);
     setIsParentLoggedIn(false);
-    window.location.href = '/'; 
   };
 
   return (
